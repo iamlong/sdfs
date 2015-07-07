@@ -14,27 +14,23 @@ class rentry {
 
  public:
 
-    virtual char hash(char * path);
+    virtual int hash(char * path, int path_size, char * hasbuff, int buff_size);
 
-    virtual int match(char * hash);
+    virtual int match(char * hash, int hash_size);
 
-    virtual int replacedestination(char * destination);
+    virtual int replacedest(char * dest, int dest_size);
 
-    virtual int adddestination(char * destination);
+    virtual int adddest(char * dest, int dest_size);
 
-    virtual int removedestination(char * destination);
+    virtual int removedest(char * dest, int dest_size);
 
- public:
-    std::vector< char > rehash;
-    std::vector< char > path;
-    std::vector< char > destination;
+ private:
+    char * ehash;
+    int ehash_size;
+    char * path;
+    int path_size;
+    std::vector< char * > dest;
 
- public:
-
-    /**
-     * @element-type rtable
-     */
-    rtable * routeitems;
 };
 
 #endif // rentry_h

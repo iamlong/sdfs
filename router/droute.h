@@ -12,13 +12,13 @@ class droute {
 
  public:
 
-    virtual int addfile(char * path, char * destination);
+    virtual int addfile(char * path, int path_size, char * dest, int dest_size);
 
-    virtual int deletefile(char * path);
+    virtual int deletefile(char * path, int path_size);
 
-    virtual int appenddestination(char * path, char * destination);
+    virtual int appenddestination(char * path, int path_size, char * dest, int dest_size);
 
-    virtual int removedestination(char * path, char * destination);
+    virtual int removedestination(char * path, int path_size, char * dest, int dest_size);
 
  public:
     
