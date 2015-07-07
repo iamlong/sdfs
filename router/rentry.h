@@ -14,15 +14,15 @@ class rentry {
 
  public:
 
-    virtual int hash(char * path, int path_size, char * hasbuff, int buff_size);
+    int hash(char * path, int path_size, char * hasbuff, int buff_size);
 
-    virtual int match(char * hash, int hash_size);
+    int match(char * hash, int hash_size);
 
-    virtual int replacedest(char * dest, int dest_size);
+    int replacedest(char * dest, int dest_size);
 
-    virtual int adddest(char * dest, int dest_size);
+    int adddest(char * dest, int dest_size);
 
-    virtual int removedest(char * dest, int dest_size);
+    int removedest(char * dest, int dest_size);
 
  private:
     char * ehash;
