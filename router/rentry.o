@@ -1,0 +1,1 @@
+rentry.o: rentry.cpp rentry.h ../include/error.h ../sha1/sha1.h

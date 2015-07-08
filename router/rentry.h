@@ -2,6 +2,7 @@
 #define rentry_h
 
 #include <vector>
+#include "../include/error.h"
 
 
 class rtable;
@@ -13,23 +14,32 @@ class rtable;
 class rentry {
 
  public:
+    struct dest
+    {
+        unsigned char * dest;
+        unsigned int dest_len;
+    };
+ public:
+    rentry(unsigned char * path, unsigned int path_size);
 
-    int hash(char * path, int path_size, char * hasbuff, int buff_size);
+    static RET_CODE hash(unsigned char * path, unsigned int path_size, unsigned char * hasbuff, unsigned int buff_size);
 
-    int match(char * hash, int hash_size);
+    bool match(unsigned char * hash, unsigned int hash_size);
 
-    int replacedest(char * dest, int dest_size);
+    void replacedest(unsigned char * dest, unsigned int dest_size);
 
-    int adddest(char * dest, int dest_size);
+    int adddest(unsigned char * dest, unsigned int dest_size);
 
-    int removedest(char * dest, int dest_size);
+    int removedest(unsigned char * dest, unsigned int dest_size);
 
  private:
-    char * ehash;
-    int ehash_size;
-    char * path;
-    int path_size;
-    std::vector< char * > dest;
+    unsigned char * m_hash;
+    unsigned int m_hash_size;
+    unsigned char * m_path;
+    unsigned int m_path_size;
+    std::vector< dest * > m_dests;
+    
+    void cleandests();
 
 };
 
