@@ -55,7 +55,7 @@ bool rentry::match(unsigned char * hash, unsigned int hash_size)
 int rentry::replacedests(unsigned char * dests, unsigned int dests_size)
 {
     //dest fornamt should be like "ip@port;ip@port"
-    //or we can replace ip with hostname
+    //or we can replace ip with hostname like "hostname@port;ip@port"
     cleandests();
     
     if(dest_size <=0 )
