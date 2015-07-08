@@ -26,7 +26,8 @@ class rentry {
 
     bool match(unsigned char * hash, unsigned int hash_size);
 
-    void replacedest(unsigned char * dest, unsigned int dest_size);
+    //return how many dest items are in the m_dests. negative for error.
+    int replacedests(unsigned char * dest, unsigned int dest_size);
 
     int adddest(unsigned char * dest, unsigned int dest_size);
 

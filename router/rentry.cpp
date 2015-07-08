@@ -52,8 +52,62 @@ bool rentry::match(unsigned char * hash, unsigned int hash_size)
         
 }
 
-void rentry::replacedest(unsigned char * dest, unsigned int dest_size)
-{ 
+int rentry::replacedests(unsigned char * dests, unsigned int dests_size)
+{
+    //dest fornamt should be like "ip@port;ip@port"
+    //or we can replace ip with hostname
+    cleandests();
+    
+    if(dest_size <=0 )
+        return -1;
+    
+    unsigned char * pt = dests;
+    unsigned char * temp;
+    unsigned int tempsize;
+    unsigned dest * destbuff;
+    unsigned int j = 0;
+    for (int i = 0; i < dests_size; i++)
+    {
+        if(dests[i] != ';' && dests[i] != NULL)
+            continue;
+        
+        if(j == i) //there is no string between ";;" and also there is no string between ";\0"
+            continue;
+            
+        //create new dest entry for dests
+        tempsize = i-j;
+        temp  = malloc((tempsize+1)*sizeof(unsigned char));
+        memset(temp, 0, (tempsize+1)*sizeof(unsigned char));
+        memcpy(temp, pt, (tempsize)*sizeof(unsigned char));
+
+        
+        //if dest already exist, just skip  
+        int destsize = m_dests.size();
+        for(int l = 0; l < destsize; l ++ )
+        {
+            if(destbuff->dest_len == tempsize)
+                if(memcmp(temp, (*m_dests[l])->dest,tempsize*sizeof(unsigned char))
+                {
+                    free(temp);
+                    temp = NULL;
+                    break;
+                }
+        }
+        
+        if(temp != NULL)
+        {
+            destbuff = new dest();
+            destbuff->dest_len = tempsize;
+            destbuff->dest = temp;
+            m_dests.push_bak(destbuff);
+        }
+        
+        pt = &dests[i+1]; // pt go to next position
+        j = i + 1;
+        if(j >= dests_size)
+            return m_dests.size();
+    }
+    return m_dests.size();   
 }
 
 void rentry::cleandests()
