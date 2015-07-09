@@ -1,8 +1,11 @@
 OBJS = rentry.o
+LDDIR = -L../sha1
+LDMODULE = -lsha1
 
 $(OBJS): %.o: %.cpp
-	cc -MM -c $< -o $@
-
+	g++ $< -o $@ $(LDDIR) $(LDMODULE) --static_linked
+	ar rc libroute.a $@
 
 clean : 
 	rm *.o
+	rm *.a

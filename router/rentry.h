@@ -32,6 +32,8 @@ class rentry {
     int adddest(unsigned char * dest, unsigned int dest_size);
 
     int removedest(unsigned char * dest, unsigned int dest_size);
+    
+    unsigned char * mergedests();
 
  private:
     unsigned char * m_hash;

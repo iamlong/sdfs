@@ -58,17 +58,17 @@ int rentry::replacedests(unsigned char * dests, unsigned int dests_size)
     //or we can replace ip with hostname like "hostname@port;ip@port"
     cleandests();
     
-    if(dest_size <=0 )
+    if(dests_size <= 0 )
         return -1;
     
     unsigned char * pt = dests;
     unsigned char * temp;
     unsigned int tempsize;
-    unsigned dest * destbuff;
+    dest * destbuff;
     unsigned int j = 0;
     for (int i = 0; i < dests_size; i++)
     {
-        if(dests[i] != ';' && dests[i] != NULL)
+        if(dests[i] != ';' && dests[i] != '\0')
             continue;
         
         if(j == i) //there is no string between ";;" and also there is no string between ";\0"
@@ -76,7 +76,7 @@ int rentry::replacedests(unsigned char * dests, unsigned int dests_size)
             
         //create new dest entry for dests
         tempsize = i-j;
-        temp  = malloc((tempsize+1)*sizeof(unsigned char));
+        temp  = (unsigned char *)malloc((tempsize+1)*sizeof(unsigned char));
         memset(temp, 0, (tempsize+1)*sizeof(unsigned char));
         memcpy(temp, pt, (tempsize)*sizeof(unsigned char));
 
@@ -85,8 +85,8 @@ int rentry::replacedests(unsigned char * dests, unsigned int dests_size)
         int destsize = m_dests.size();
         for(int l = 0; l < destsize; l ++ )
         {
-            if(destbuff->dest_len == tempsize)
-                if(memcmp(temp, (*m_dests[l])->dest,tempsize*sizeof(unsigned char))
+            if(m_dests[l]->dest_len == tempsize)
+                if(memcmp(temp, m_dests[l]->dest,tempsize*sizeof(unsigned char)))
                 {
                     free(temp);
                     temp = NULL;
@@ -99,7 +99,7 @@ int rentry::replacedests(unsigned char * dests, unsigned int dests_size)
             destbuff = new dest();
             destbuff->dest_len = tempsize;
             destbuff->dest = temp;
-            m_dests.push_bak(destbuff);
+            m_dests.push_back(destbuff);
         }
         
         pt = &dests[i+1]; // pt go to next position
@@ -130,6 +130,28 @@ void rentry::cleandests()
     m_dests.clear(); 
 }
 
+unsigned char * rentry::mergedests()
+{
+    int size = m_dests.size();
+    if(size <= 0)
+        return NULL;
+    
+    int destsbufflen;
+    for (int i = 0; i < size; i++)
+        destsbufflen = m_dests[i]->dest_len+1;
+        
+    unsigned char * head = (unsigned char *) malloc ((destsbufflen+1)*sizeof(unsigned char));
+    memset(head, 0, (destsbufflen+1)*sizeof(unsigned char));
+    
+    unsigned char * temp = head;
+    for(int i = 0; i < size; i++){
+        memcpy(head,m_dests[i]->dest, m_dests[i]->dest_len*sizeof(unsigned char));
+        head ++;
+        *head = ';';
+    }
+        
+        
+}
 int rentry::adddest(unsigned char * dest, unsigned int dest_size)
 {
     return 0;
