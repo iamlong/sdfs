@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <memory.h>
 
+#define DIGEST_LEN 20
+
     /** 
      *  rentry stands for an inode entry for a file or directory in the file system. It actually referencing to a network location of the filenode structure. This filenode structure include the information of  
      */
@@ -13,13 +15,13 @@
 
 RET_CODE rentry::hash(unsigned char * path, unsigned int path_size, unsigned char * hashbuff, unsigned int buff_size)
 {
-    SHA1_CTX context;
+    CSHA1 sha1;
     if(buff_size < 20 || hashbuff == NULL)
         return ret_err;
     
-    SHA1Init(&context);
-    SHA1Update(&context, path, path_size);
-    SHA1Final(hashbuff, &context);
+    sha1.Update(path, path_size);
+    sha1.Final();
+	sha1.ReportHash((char*)hashbuff);
     return ret_ok;
 
 }
@@ -66,7 +68,7 @@ int rentry::replacedests(unsigned char * dests, unsigned int dests_size)
     unsigned int tempsize;
     dest * destbuff;
     unsigned int j = 0;
-    for (int i = 0; i < dests_size; i++)
+    for (int i = 0; i < dests_size+1; i++)
     {
         if(dests[i] != ';' && dests[i] != '\0')
             continue;
@@ -146,10 +148,11 @@ unsigned char * rentry::mergedests()
     unsigned char * temp = head;
     for(int i = 0; i < size; i++){
         memcpy(head,m_dests[i]->dest, m_dests[i]->dest_len*sizeof(unsigned char));
-        head ++;
-        *head = ';';
+        temp +=m_dests[i]->dest_len*sizeof(unsigned char);
+        *temp = ';';
     }
-        
+    
+	return head;
         
 }
 int rentry::adddest(unsigned char * dest, unsigned int dest_size)

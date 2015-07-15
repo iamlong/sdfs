@@ -5,8 +5,8 @@ LDMOULE = -lroute -lgtest -lsha1
 OBJS = testrentry.o
 
 $(OBJS): %.o: %.cpp
-	g++ $< -o $@ $(INCDIR) $(LDDIR) $(LDMOULE)
-	. ./$@
+	g++ -g $< -o $@ $(INCDIR) $(LDDIR) $(LDMOULE)
+	#./$@
 
 clean : 
 	rm *.o

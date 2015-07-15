@@ -3,7 +3,7 @@ LDDIR = -L../sha1
 LDMODULE = -lsha1
 
 $(OBJS): %.o: %.cpp
-	g++ -c $< -o $@ $(LDDIR) $(LDMODULE) 
+	g++ -g -c $< -o $@ $(LDDIR) $(LDMODULE) 
 	ar rc libroute.a $@
 
 clean : 
