@@ -66,7 +66,6 @@ int rentry::replacedests(unsigned char * dests, unsigned int dests_size)
     unsigned char * pt = dests;
     unsigned char * temp;
     unsigned int tempsize;
-    dest * destbuff;
     unsigned int j = 0;
     for (int i = 0; i < dests_size+1; i++)
     {
@@ -83,26 +82,7 @@ int rentry::replacedests(unsigned char * dests, unsigned int dests_size)
         memcpy(temp, pt, (tempsize)*sizeof(unsigned char));
 
         
-        //if dest already exist, just skip  
-        int destsize = m_dests.size();
-        for(int l = 0; l < destsize; l ++ )
-        {
-            if(m_dests[l]->dest_len == tempsize)
-                if(memcmp(temp, m_dests[l]->dest,tempsize*sizeof(unsigned char)))
-                {
-                    free(temp);
-                    temp = NULL;
-                    break;
-                }
-        }
-        
-        if(temp != NULL)
-        {
-            destbuff = new dest();
-            destbuff->dest_len = tempsize;
-            destbuff->dest = temp;
-            m_dests.push_back(destbuff);
-        }
+		adddest(temp, tempsize);
         
         pt = &dests[i+1]; // pt go to next position
         j = i + 1;
@@ -122,7 +102,7 @@ void rentry::cleandests()
 
     for (int i = 0; i < size; i++)
     {
-        temp = &(*m_dests[i]);
+        temp = m_dests[i];
         if(temp->dest!=NULL){
             free(temp->dest);
             temp->dest = NULL;
@@ -132,35 +112,63 @@ void rentry::cleandests()
     m_dests.clear(); 
 }
 
-unsigned char * rentry::mergedests()
+unsigned char * rentry::printdests()
 {
     int size = m_dests.size();
     if(size <= 0)
         return NULL;
     
-    int destsbufflen;
+    int destsbufflen = 0;
     for (int i = 0; i < size; i++)
-        destsbufflen = m_dests[i]->dest_len+1;
+        destsbufflen += m_dests[i]->dest_len+1;
         
     unsigned char * head = (unsigned char *) malloc ((destsbufflen+1)*sizeof(unsigned char));
     memset(head, 0, (destsbufflen+1)*sizeof(unsigned char));
     
     unsigned char * temp = head;
     for(int i = 0; i < size; i++){
-        memcpy(head,m_dests[i]->dest, m_dests[i]->dest_len*sizeof(unsigned char));
+        memcpy(temp,m_dests[i]->dest, m_dests[i]->dest_len*sizeof(unsigned char));
         temp +=m_dests[i]->dest_len*sizeof(unsigned char);
         *temp = ';';
+		temp++;
     }
     
 	return head;
         
 }
-int rentry::adddest(unsigned char * dest, unsigned int dest_size)
+int rentry::adddest(unsigned char * deststr, unsigned int dest_size)
 {
+	dest * destbuff;
+	//if dest already exist, just skip  
+	int destsize = m_dests.size();
+	for(int l = 0; l < destsize; l ++ )
+	{
+		if(m_dests[l]->dest_len == dest_size)
+		if(memcmp(deststr, m_dests[l]->dest,dest_size*sizeof(unsigned char)) == 0)
+		{
+			free(deststr);
+			deststr = NULL;
+			return 0;
+		}
+	}
+	
+	if(deststr != NULL)
+	{
+		destbuff = new dest();
+		destbuff->dest_len = dest_size;
+		destbuff->dest = deststr;
+		m_dests.push_back(destbuff);
+		return 1;
+	}
     return 0;
 }
 
 int rentry::removedest(unsigned char * dest, unsigned int dest_size)
 {
     return 0;
+}
+
+rentry::~rentry()
+{
+	//cleandests();
 }

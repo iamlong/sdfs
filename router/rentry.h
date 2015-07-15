@@ -21,6 +21,7 @@ class rentry {
     };
  public:
     rentry(unsigned char * path, unsigned int path_size);
+	~rentry();
 
     static RET_CODE hash(unsigned char * path, unsigned int path_size, unsigned char * hasbuff, unsigned int buff_size);
 
@@ -33,8 +34,10 @@ class rentry {
 
     int removedest(unsigned char * dest, unsigned int dest_size);
     
-    unsigned char * mergedests();
+    unsigned char * printdests();
 
+	void cleandests();
+	
  private:
     unsigned char * m_hash;
     unsigned int m_hash_size;
@@ -42,7 +45,7 @@ class rentry {
     unsigned int m_path_size;
     std::vector< dest * > m_dests;
     
-    void cleandests();
+
 
 };
 
