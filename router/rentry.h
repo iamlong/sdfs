@@ -2,8 +2,11 @@
 #define rentry_h
 
 #include <vector>
+#include <string>
 #include "../include/error.h"
+#include "dest.h"
 
+using namespace std;
 
 class rtable;
 
@@ -14,36 +17,30 @@ class rtable;
 class rentry {
 
  public:
-    struct dest
-    {
-        unsigned char * dest;
-        unsigned int dest_len;
-    };
- public:
-    rentry(unsigned char * path, unsigned int path_size);
+    rentry(string reqpath);
 	~rentry();
 
-    static RET_CODE hash(unsigned char * path, unsigned int path_size, unsigned char * hasbuff, unsigned int buff_size);
+    static RET_CODE hash(const char * path, const int path_size, string * hasbuff, const int buff_size);
 
-    bool match(unsigned char * hash, unsigned int hash_size);
+    bool operator==(const string & S1);
 
     //return how many dest items are in the m_dests. negative for error.
-    int replacedests(unsigned char * dest, unsigned int dest_size);
+    int replacedests(string destsString);
 
-    int adddest(unsigned char * dest, unsigned int dest_size);
+    int adddest(const string dest);
 
-    int removedest(unsigned char * dest, unsigned int dest_size);
+    int removedest(const string dest);
     
-    unsigned char * printdests();
+    string toString();
 
 	void cleandests();
 	
  private:
-    unsigned char * m_hash;
+    string m_hash;
     unsigned int m_hash_size;
-    unsigned char * m_path;
+    string m_path;
     unsigned int m_path_size;
-    std::vector< dest * > m_dests;
+    vector< dest > m_dests;
     
 
 

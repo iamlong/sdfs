@@ -11,7 +11,6 @@ class dest {
 		string m_deststr;
 		string m_desthost;
 		string m_destport;
-		
 		void parse();
 	
 	public:
