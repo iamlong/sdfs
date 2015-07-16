@@ -20,7 +20,7 @@ class rentry {
     rentry(string reqpath);
 	~rentry();
 
-    static RET_CODE hash(const char * path, const int path_size, string * hasbuff, const int buff_size);
+    static string hash(const string path);
 
     bool operator==(const string & S1);
 

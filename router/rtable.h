@@ -11,15 +11,15 @@ class rtable {
 
  public:
 
-    virtual char findpath(char * path);
+    virtual string findpath(string path);
 
-    virtual int addpath(char * path, char destination);
+    virtual int addpath(string path, string destination);
 
-    virtual int deletepath(char * path);
+    virtual int deletepath(string path);
 
-    virtual int updatepathdestination(char * path, char * destination);
+    virtual int updatepathdestination(string path, string destination);
 
-    virtual int removepathdestination(char * path, char * destination);
+    virtual int removepathdestination(string path, string destination);
 
  public:
 

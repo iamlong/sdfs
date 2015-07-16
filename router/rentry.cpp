@@ -13,16 +13,15 @@
 
 
 
-RET_CODE rentry::hash(unsigned char * path, unsigned int path_size, unsigned char * hashbuff, unsigned int buff_size)
+string rentry::hash(const string path)
 {
     CSHA1 sha1;
-    if(buff_size < 20 || hashbuff == NULL)
-        return ret_err;
+    char hashbuff[20];
     
-    sha1.Update(path, path_size);
+    sha1.Update((unsigned char *)path.c_str(), path.size());
     sha1.Final();
-	sha1.ReportHash((char*)hashbuff);
-    return ret_ok;
+	sha1.ReportHash(hashbuff);
+    return hashbuff;
 
 }
 
