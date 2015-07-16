@@ -1,8 +1,10 @@
-OBJS = rentry.o
+OBJS = dest.o rentry.o
 LDDIR = -L../sha1
 LDMODULE = -lsha1
 
-$(OBJS): %.o: %.cpp
+all: $(OBJS)
+
+$(OBJS) : %.o : %.cpp
 	g++ -g -c $< -o $@ $(LDDIR) $(LDMODULE) 
 	ar rc libroute.a $@
 
