@@ -16,7 +16,7 @@
 string rentry::hash(const string path)
 {
     CSHA1 sha1;
-    char hashbuff[20];
+    char hashbuff[DIGEST_LEN];
     
     sha1.Update((unsigned char *)path.c_str(), path.size());
     sha1.Final();
@@ -25,69 +25,39 @@ string rentry::hash(const string path)
 
 }
 
-rentry::rentry(unsigned char * path, unsigned int path_size)
+rentry::rentry(string path)
 {
-    m_path = (unsigned char*) malloc((path_size+1)*sizeof(unsigned char));
-    m_path_size = path_size;
-    
-    memset(m_path, 0, (m_path_size+1)*sizeof(unsigned char));
-    memcpy(m_path, path, (m_path_size)*sizeof(unsigned char));
+    m_path = path;
         
-    m_hash = (unsigned char*) malloc(DIGEST_LEN*sizeof(unsigned char));
-    m_hash_size = DIGEST_LEN;
-    memset(m_hash, 0, m_hash_size*sizeof(unsigned char));
-    
-    hash(m_path, m_path_size, m_hash, m_hash_size);
+    m_hash = hash(path);
     
 }
 
-bool rentry::match(unsigned char * hash, unsigned int hash_size)
+bool rentry::operator==(const string & comphash)
 {
-    if(hash_size != m_hash_size)
-        return false;
-    
-    if(memcmp(hash, m_hash, m_hash_size*sizeof(unsigned char))==0)
+	if(m_hash == comphash)
         return true;
     else
         return false;
         
 }
 
-int rentry::replacedests(unsigned char * dests, unsigned int dests_size)
+int rentry::replacedests(const string dests)
 {
     //dest fornamt should be like "ip@port;ip@port"
     //or we can replace ip with hostname like "hostname@port;ip@port"
     cleandests();
-    
-    if(dests_size <= 0 )
-        return -1;
-    
-    unsigned char * pt = dests;
-    unsigned char * temp;
-    unsigned int tempsize;
-    unsigned int j = 0;
-    for (int i = 0; i < dests_size+1; i++)
-    {
-        if(dests[i] != ';' && dests[i] != '\0')
-            continue;
-        
-        if(j == i) //there is no string between ";;" and also there is no string between ";\0"
-            continue;
-            
-        //create new dest entry for dests
-        tempsize = i-j;
-        temp  = (unsigned char *)malloc((tempsize+1)*sizeof(unsigned char));
-        memset(temp, 0, (tempsize+1)*sizeof(unsigned char));
-        memcpy(temp, pt, (tempsize)*sizeof(unsigned char));
-
-        
-		adddest(temp, tempsize);
-        
-        pt = &dests[i+1]; // pt go to next position
-        j = i + 1;
-        if(j >= dests_size)
-            return m_dests.size();
-    }
+    int commpos;
+    string tempstr = dests;
+	
+	commpos = tempstr.find(';');
+	while(commpos!=string::npos){
+		adddest(tempstr.substr(0,commpos));
+		tempstr = tempstr.substr(commpos+1);
+		commpos = tempstr.find(';');
+	}
+	adddest(tempstr);
+	
     return m_dests.size();   
 }
 
@@ -101,65 +71,32 @@ void rentry::cleandests()
 
     for (int i = 0; i < size; i++)
     {
-        temp = m_dests[i];
-        if(temp->dest!=NULL){
-            free(temp->dest);
-            temp->dest = NULL;
-            delete temp;
-        }
+        temp = &m_dests[i];
+		delete temp;
     }
     m_dests.clear(); 
 }
 
-unsigned char * rentry::printdests()
+string rentry::toString()
 {
     int size = m_dests.size();
-    if(size <= 0)
-        return NULL;
-    
-    int destsbufflen = 0;
+    string str = NULL;
+
     for (int i = 0; i < size; i++)
-        destsbufflen += m_dests[i]->dest_len+1;
+        str += m_dests[i].toString();
         
-    unsigned char * head = (unsigned char *) malloc ((destsbufflen+1)*sizeof(unsigned char));
-    memset(head, 0, (destsbufflen+1)*sizeof(unsigned char));
-    
-    unsigned char * temp = head;
-    for(int i = 0; i < size; i++){
-        memcpy(temp,m_dests[i]->dest, m_dests[i]->dest_len*sizeof(unsigned char));
-        temp +=m_dests[i]->dest_len*sizeof(unsigned char);
-        *temp = ';';
-		temp++;
-    }
-    
-	return head;
+	return str;
         
 }
-int rentry::adddest(unsigned char * deststr, unsigned int dest_size)
+int rentry::adddest(const string deststr)
 {
-	dest * destbuff;
-	//if dest already exist, just skip  
-	int destsize = m_dests.size();
-	for(int l = 0; l < destsize; l ++ )
-	{
-		if(m_dests[l]->dest_len == dest_size)
-		if(memcmp(deststr, m_dests[l]->dest,dest_size*sizeof(unsigned char)) == 0)
-		{
-			free(deststr);
-			deststr = NULL;
+	dest destbuff = new dest(deststr);
+	for (int i = 0; i<m_dests.size();i++){
+		if(m_dests[i]==destbuff)
 			return 0;
-		}
 	}
-	
-	if(deststr != NULL)
-	{
-		destbuff = new dest();
-		destbuff->dest_len = dest_size;
-		destbuff->dest = deststr;
-		m_dests.push_back(destbuff);
-		return 1;
-	}
-    return 0;
+	m_dests.push_back(destbuff);
+	return 1;
 }
 
 int rentry::removedest(unsigned char * dest, unsigned int dest_size)
