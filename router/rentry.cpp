@@ -33,7 +33,7 @@ rentry::rentry(string path)
     
 }
 
-bool rentry::operator==(const string & comphash)
+bool rentry::match(const string & comphash)
 {
 	if(m_hash == comphash)
         return true;
@@ -90,16 +90,16 @@ string rentry::toString()
 }
 int rentry::adddest(const string deststr)
 {
-	dest destbuff = new dest(deststr);
+	dest * destbuff = new dest(deststr);
 	for (int i = 0; i<m_dests.size();i++){
-		if(m_dests[i]==destbuff)
+		if(m_dests[i]==*destbuff)
 			return 0;
 	}
-	m_dests.push_back(destbuff);
+	m_dests.push_back(*destbuff);
 	return 1;
 }
 
-int rentry::removedest(unsigned char * dest, unsigned int dest_size)
+int rentry::removedest(string deststr)
 {
     return 0;
 }
