@@ -13,10 +13,10 @@
 
 
 
-string rentry::hash(const string path)
+char * rentry::hash(const string path)
 {
     CSHA1 sha1;
-    char hashbuff[DIGEST_LEN];
+    char * hashbuff = new char[DIGEST_LEN];
     
     sha1.Update((unsigned char *)path.c_str(), path.size());
     sha1.Final();
@@ -56,7 +56,8 @@ int rentry::replacedests(const string dests)
 		tempstr = tempstr.substr(commpos+1);
 		commpos = tempstr.find(';');
 	}
-	adddest(tempstr);
+	if(tempstr.find("@")!=string::npos)
+		adddest(tempstr);
 	
     return m_dests.size();   
 }
@@ -71,7 +72,7 @@ void rentry::cleandests()
 
     for (int i = 0; i < size; i++)
     {
-        temp = &m_dests[i];
+        temp = m_dests[i];
 		delete temp;
     }
     m_dests.clear(); 
@@ -80,31 +81,47 @@ void rentry::cleandests()
 string rentry::toString()
 {
     int size = m_dests.size();
-    string str = NULL;
+    string str;
 
     for (int i = 0; i < size; i++)
-        str += m_dests[i].toString();
+		if(i != size -1)
+			str += m_dests[i]->toString()+';';
+		else
+			str += m_dests[i]->toString();
         
 	return str;
         
 }
-int rentry::adddest(const string deststr)
+bool rentry::adddest(const string deststr)
 {
 	dest * destbuff = new dest(deststr);
 	for (int i = 0; i<m_dests.size();i++){
-		if(m_dests[i]==*destbuff)
-			return 0;
+		if(*m_dests[i]==*destbuff){
+			delete destbuff;
+			return false;
+		}
+
 	}
-	m_dests.push_back(*destbuff);
-	return 1;
+	m_dests.push_back(destbuff);
+	return true;
 }
 
-int rentry::removedest(string deststr)
+bool rentry::removedest(string deststr)
 {
-    return 0;
+	dest tempdest (deststr);
+	bool removed = false;
+	
+	for (int i=0; i<m_dests.size();i++ )
+		if(*m_dests[i]==tempdest){
+			delete m_dests[i];
+			m_dests.erase(m_dests.begin()+i);
+			removed=true;
+		}
+    return removed;
 }
 
 rentry::~rentry()
 {
-	//cleandests();
+	cleandests();
+	delete m_hash;
 }

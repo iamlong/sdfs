@@ -20,27 +20,27 @@ class rentry {
     rentry(string reqpath);
 	~rentry();
 
-    static string hash(const string path);
+    static char * hash(const string path);
 
     bool match(const string & comphash);
 
     //return how many dest items are in the m_dests. negative for error.
     int replacedests(const string destsString);
 
-    int adddest(const string dest);
+    bool adddest(const string dest);
 
-    int removedest(const string dest);
+    bool removedest(const string dest);
     
     string toString();
 
 	void cleandests();
 	
  private:
-    string m_hash;
+    char * m_hash;
     unsigned int m_hash_size;
     string m_path;
     unsigned int m_path_size;
-    vector< dest > m_dests;
+    vector< dest * > m_dests;
     
 
 

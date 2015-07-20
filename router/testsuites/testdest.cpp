@@ -2,6 +2,16 @@
 
 #include <gtest/gtest.h>
 
+
+TEST (DestTest, TestEqual) {
+	string one_dest = "1.1.1.1@30";
+	string two_dest = "1.2.1.1@40";
+	dest a(one_dest);
+	dest b(one_dest);
+	dest c(two_dest);
+	ASSERT_TRUE(a==b);
+	ASSERT_FALSE(b==c);
+}
 TEST (DestTest, God_DestStr) {
 		
 	string one_dest = "1.1.1.1@30";
