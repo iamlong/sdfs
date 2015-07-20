@@ -16,6 +16,7 @@ class dest {
 	public:
 		dest(const string str);
 		string toString();
+		bool operator==(const dest& compdest);
 		
 };
 #endif

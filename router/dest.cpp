@@ -16,3 +16,10 @@ string dest::toString(){
 	string a = m_desthost+"@"+m_destport;
 	return a;
 }
+
+bool dest::operator==(const dest & compdest){
+	if((m_desthost == compdest.m_desthost)&&(m_desthost==compdest.m_desthost))
+		return true;
+	else
+		return false;
+}

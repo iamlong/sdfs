@@ -22,7 +22,7 @@ class rentry {
 
     static string hash(const string path);
 
-    bool operator==(const string & comphash);
+    bool match(const string & comphash);
 
     //return how many dest items are in the m_dests. negative for error.
     int replacedests(const string destsString);
