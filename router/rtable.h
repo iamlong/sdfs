@@ -10,8 +10,13 @@ class droute;
 class rtable {
 
  public:
+ 	
+ 	rtable(drouter * router);
+ 	
+	 ~rtable();
 
-    virtual string findpath(string path);
+	//find destination of given path
+    string findpath(string path);
 
     virtual int addpath(string path, string destination);
 
@@ -26,12 +31,12 @@ class rtable {
     /**
      * @element-type droute
      */
-    droute * router;
+    droute * m_router;
 
     /**
      * @element-type rentry
      */
-    std::vector< rentry > routeitems;
+    std::vector< rentry * > routeitems;
 };
 
 #endif // rtable_h
