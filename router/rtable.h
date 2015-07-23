@@ -5,20 +5,24 @@
 
 #include "rentry.h"
 
-class droute;
+#include "droute.h"
+
+using namespace std;
+
 
 class rtable {
 
  public:
  	
- 	rtable(drouter * router);
+ 	rtable(droute * router);
  	
 	 ~rtable();
 
 	//find destination of given path
-    string findpath(string path);
+    vector <dest *> * findpath(string path);
 
-    virtual int addpath(string path, string destination);
+	//add a new path to routeitems with destinations set
+    bool addpath(string path, string destination);
 
     virtual int deletepath(string path);
 
@@ -26,7 +30,7 @@ class rtable {
 
     virtual int removepathdestination(string path, string destination);
 
- public:
+ private:
 
     /**
      * @element-type droute
@@ -36,7 +40,7 @@ class rtable {
     /**
      * @element-type rentry
      */
-    std::vector< rentry * > routeitems;
+    vector< rentry * > m_routeitems;
 };
 
 #endif // rtable_h

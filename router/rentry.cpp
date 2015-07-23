@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <memory.h>
 
-#define DIGEST_LEN 20
 
     /** 
      *  rentry stands for an inode entry for a file or directory in the file system. It actually referencing to a network location of the filenode structure. This filenode structure include the information of  
@@ -33,9 +32,9 @@ rentry::rentry(string path)
     
 }
 
-bool rentry::match(const string & comphash)
+bool rentry::match(const char * comphash)
 {
-	if(m_hash == comphash)
+	if(memcmp(m_hash, comphash, DIGEST_LEN)==0)
         return true;
     else
         return false;
@@ -118,6 +117,10 @@ bool rentry::removedest(string deststr)
 			removed=true;
 		}
     return removed;
+}
+
+vector<dest*> * rentry::getDests(){
+	return &m_dests;
 }
 
 rentry::~rentry()

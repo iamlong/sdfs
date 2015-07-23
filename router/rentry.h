@@ -6,6 +6,8 @@
 #include "../include/error.h"
 #include "dest.h"
 
+#define DIGEST_LEN 20
+
 using namespace std;
 
 class rtable;
@@ -22,10 +24,12 @@ class rentry {
 
     static char * hash(const string path);
 
-    bool match(const string & comphash);
+    bool match(const char * comphash);
 
     //return how many dest items are in the m_dests. negative for error.
     int replacedests(const string destsString);
+    
+    vector<dest *> * getDests();
 
     bool adddest(const string dest);
 
