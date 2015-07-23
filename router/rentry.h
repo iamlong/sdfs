@@ -27,7 +27,7 @@ class rentry {
     bool match(const char * comphash);
 
     //return how many dest items are in the m_dests. negative for error.
-    int replacedests(const string destsString);
+    int updatedests(const string destsString);
     
     vector<dest *> * getDests();
 

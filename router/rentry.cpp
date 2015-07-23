@@ -41,13 +41,13 @@ bool rentry::match(const char * comphash)
         
 }
 
-int rentry::replacedests(const string dests)
+int rentry::updatedests(const string destsString)
 {
     //dest fornamt should be like "ip@port;ip@port"
     //or we can replace ip with hostname like "hostname@port;ip@port"
     cleandests();
     int commpos;
-    string tempstr = dests;
+    string tempstr = destsString;
 	
 	commpos = tempstr.find(';');
 	while(commpos!=string::npos){
