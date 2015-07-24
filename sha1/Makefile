@@ -3,5 +3,5 @@ sha1.o: sha1.cpp sha1.h
 	ar rc libsha1.a sha1.o
 
 clean : 
-	rm *.o
-	rm *.a
+	rm -f *.o
+	rm -f *.a

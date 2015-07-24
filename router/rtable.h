@@ -19,17 +19,22 @@ class rtable {
 	 ~rtable();
 
 	//find destination of given path
-    vector <dest *> * getItemDests(int i);
+        
 	int findpath(string path);
-
+	
+	vector <dest *> * getItemDests(int i);
+    
 	//add a new path to routeitems with destinations set
     bool addpath(string path, string destinations);
 
+	//delete a path and related destinations 
     bool deletepath(string path);
 
-    virtual int updatepathdestination(string path, string destination);
+    bool refreshpath(string path, string destinations);
 
-    virtual int removepathdestination(string path, string destination);
+	bool addpathdest(string path, string destination);
+	
+    bool removepathdest(string path, string destination);
 
  private:
 

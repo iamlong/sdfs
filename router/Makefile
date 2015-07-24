@@ -9,5 +9,5 @@ $(OBJS) : %.o : %.cpp
 	ar rc libroute.a $@
 
 clean : 
-	rm *.o
-	rm *.a
+	rm -f *.o
+	rm -f *.a

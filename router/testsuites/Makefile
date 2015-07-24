@@ -11,4 +11,4 @@ $(OBJS): %.o: %.cpp
 	#./$@
 
 clean : 
-	rm *.o
+	rm -f *.o
