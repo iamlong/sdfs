@@ -12,24 +12,20 @@
 
 
 
-char * rentry::hash(const string path)
+void rentry::hash(const string path, char * hashbuff)
 {
     CSHA1 sha1;
-    char * hashbuff = new char[DIGEST_LEN];
-    
+  
     sha1.Update((unsigned char *)path.c_str(), path.size());
     sha1.Final();
-	sha1.ReportHash(hashbuff);
-    return hashbuff;
-
+	sha1.GetHash((unsigned char *)hashbuff);
 }
 
 rentry::rentry(string path)
 {
     m_path = path;
-        
-    m_hash = hash(path);
-    
+    m_hash_size = hash_size;
+    hash(path, m_hash);
 }
 
 bool rentry::match(const char * comphash)
@@ -41,7 +37,7 @@ bool rentry::match(const char * comphash)
         
 }
 
-int rentry::updatedests(const string destsString)
+int rentry::refreshdests(const string destsString)
 {
     //dest fornamt should be like "ip@port;ip@port"
     //or we can replace ip with hostname like "hostname@port;ip@port"
@@ -126,5 +122,4 @@ vector<dest*> * rentry::getDests(){
 rentry::~rentry()
 {
 	cleandests();
-	delete m_hash;
 }

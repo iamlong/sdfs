@@ -22,12 +22,13 @@ class rentry {
     rentry(string reqpath);
 	~rentry();
 
-    static char * hash(const string path);
+    static void hash(const string path, char * hashbuff);
+    static const int hash_size = DIGEST_LEN;
 
     bool match(const char * comphash);
 
     //return how many dest items are in the m_dests. negative for error.
-    int updatedests(const string destsString);
+    int refreshdests(const string destsString);
     
     vector<dest *> * getDests();
 
@@ -40,7 +41,7 @@ class rentry {
 	void cleandests();
 	
  private:
-    char * m_hash;
+    char m_hash[hash_size];
     unsigned int m_hash_size;
     string m_path;
     unsigned int m_path_size;

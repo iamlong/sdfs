@@ -1,4 +1,4 @@
-OBJS = dest.o rentry.o
+OBJS = rtable.o dest.o rentry.o
 LDDIR = -L../sha1
 LDMODULE = -lsha1
 

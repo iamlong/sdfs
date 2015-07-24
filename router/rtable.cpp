@@ -9,9 +9,13 @@ rtable::rtable(){
 	//m_router = router;
 }
 
+rtable::~rtable(){
+	
+}
 int rtable::findpath(string path)
 {
-	char * hash = rentry::hash(path);
+	char hash[rentry::hash_size]; 
+	rentry::hash(path, hash);
 	int i;
 	int size = m_routeitems.size();
 	for(i = 0; i< size;i++)
@@ -20,7 +24,7 @@ int rtable::findpath(string path)
 	
 	if(i>=size)
 		i=-1;
-	delete hash;
+
     return i;
 }
 
@@ -33,7 +37,7 @@ bool rtable::addpath(string path, string destinations)
 	if(findpath(path)!=-1)
 		return false;
 	rentry *newitem = new rentry(path);
-	newitem->updatedests(destinations);
+	newitem->refreshdests(destinations);
 	
 	m_routeitems.push_back(newitem);
     return true;

@@ -2,7 +2,7 @@ INCDIR = -I../../include
 LDDIR = -L../ -L../../external -L../../sha1
 LDMOULE = -lroute -lgtest -lsha1
 
-OBJS = testdest.o testrentry.o
+OBJS = testrtable.o testdest.o testrentry.o
 
 all: $(OBJS)
 
