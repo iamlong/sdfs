@@ -24,12 +24,12 @@ HostApplication=
 UseCustomMakefile=0
 CustomMakefile=
 CommandLine=
-Folders=
+Folders=fs
 IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
 CompilerSettings=0000000000000000000000000
-UnitCount=10
+UnitCount=11
 
 [VersionInfo]
 Major=1
@@ -144,6 +144,16 @@ BuildCmd=
 FileName=sha1\sha1.h
 CompileCpp=1
 Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit11]
+FileName=fs\sinode.h
+CompileCpp=1
+Folder=fs
 Compile=1
 Link=1
 Priority=1000
