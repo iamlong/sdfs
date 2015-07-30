@@ -4,8 +4,8 @@
 CPP      = g++.exe
 CC       = gcc.exe
 WINDRES  = windres.exe
-OBJ      = router/dest.o router/droute.o router/rentry.o router/rtable.o sha1/sha1.o
-LINKOBJ  = router/dest.o router/droute.o router/rentry.o router/rtable.o sha1/sha1.o
+OBJ      = router/dest.o router/droute.o router/rentry.o router/rtable.o sha1/sha1.o util/utils.o
+LINKOBJ  = router/dest.o router/droute.o router/rentry.o router/rtable.o sha1/sha1.o util/utils.o
 LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc
 INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
 CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
@@ -39,3 +39,6 @@ router/rtable.o: router/rtable.cpp
 
 sha1/sha1.o: sha1/sha1.cpp
 	$(CPP) -c sha1/sha1.cpp -o sha1/sha1.o $(CXXFLAGS)
+
+util/utils.o: util/utils.cpp
+	$(CPP) -c util/utils.cpp -o util/utils.o $(CXXFLAGS)

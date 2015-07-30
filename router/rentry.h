@@ -5,8 +5,7 @@
 #include <string>
 #include "../include/error.h"
 #include "dest.h"
-
-#define DIGEST_LEN 20
+#include "../util/utils.h"
 
 using namespace std;
 
@@ -22,7 +21,6 @@ class rentry {
     rentry(string reqpath);
 	~rentry();
 
-    static void hash(const string path, char * hashbuff);
     static const int hash_size = DIGEST_LEN;
 
     bool match(const char * comphash);

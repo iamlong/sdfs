@@ -1,31 +1,15 @@
 #include "rentry.h"
-#include "../sha1/sha1.h"
-#include "../include/error.h"
-
-#include <stdlib.h>
-#include <memory.h>
-
 
     /** 
      *  rentry stands for an inode entry for a file or directory in the file system. It actually referencing to a network location of the filenode structure. This filenode structure include the information of  
      */
 
 
-
-void rentry::hash(const string path, char * hashbuff)
-{
-    CSHA1 sha1;
-  
-    sha1.Update((unsigned char *)path.c_str(), path.size());
-    sha1.Final();
-	sha1.GetHash((unsigned char *)hashbuff);
-}
-
 rentry::rentry(string path)
 {
     m_path = path;
     m_hash_size = hash_size;
-    hash(path, m_hash);
+    utils::hash(path, m_hash);
 }
 
 bool rentry::match(const char * comphash)

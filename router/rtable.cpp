@@ -1,4 +1,5 @@
 #include "rtable.h"
+#include "../util/utils.h"
 
 
 /*rtable::rtable(droute * router){
@@ -15,7 +16,7 @@ rtable::~rtable(){
 int rtable::findpath(string path)
 {
 	char hash[rentry::hash_size]; 
-	rentry::hash(path, hash);
+	utils::hash(path, hash);
 	int i;
 	int size = m_routeitems.size();
 	for(i = 0; i< size;i++)
