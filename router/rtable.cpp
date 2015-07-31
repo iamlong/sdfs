@@ -13,14 +13,14 @@ rtable::rtable(){
 rtable::~rtable(){
 	
 }
-int rtable::findpath(string path)
+int rtable::findPath(string path)
 {
 	char hash[rentry::hash_size]; 
 	utils::hash(path, hash);
 	int i;
-	int size = m_routeitems.size();
+	int size = m_nodeitems.size();
 	for(i = 0; i< size;i++)
-		if(m_routeitems[i]->match(hash))
+		if(m_nodeitems[i]->match(hash))
 			break;
 	
 	if(i>=size)
@@ -29,67 +29,67 @@ int rtable::findpath(string path)
     return i;
 }
 
-vector <dest *> * rtable::getItemDests(int i){
-	return m_routeitems[i]->getDests();
+vector <dest *> * rtable::getPathItemDests(int i){
+	return m_nodeitems[i]->getDests();
 }
 
-rentry * rtable::getItem(int i){
-	return m_routeitems[i];
+rentry * rtable::getPathItem(int i){
+	return m_nodeitems[i];
 }
-bool rtable::addpath(string path, string destinations)
+bool rtable::addPath(string path, string destinations)
 {
-	if(findpath(path)!=-1)
+	if(findPath(path)!=-1)
 		return false;
 	rentry *newitem = new rentry(path);
-	newitem->refreshdests(destinations);
+	newitem->refreshDests(destinations);
 	
-	m_routeitems.push_back(newitem);
+	m_nodeitems.push_back(newitem);
     return true;
 }
 
-bool rtable::deletepath(string path)
+bool rtable::deletePath(string path)
 {
-	int i = findpath(path);
+	int i = findPath(path);
 	if(i==-1)
 		return false;
 		
-	delete m_routeitems[i];
-	m_routeitems.erase(m_routeitems.begin()+i);
+	delete m_nodeitems[i];
+	m_nodeitems.erase(m_nodeitems.begin()+i);
 	return true;	    
 }
 
-bool rtable::refreshpath(string path, string destinations)
+bool rtable::refreshPath(string path, string destinations)
 {
-	int i = findpath(path);
+	int i = findPath(path);
 	if(i == -1)
 		return false;
 	
-	rentry * ent = m_routeitems[i];
-	ent->refreshdests(destinations);
+	rentry * ent = m_nodeitems[i];
+	ent->refreshDests(destinations);
 		
     return true;
 }
 
-bool rtable::addpathdest(string path, string destination)
+bool rtable::addPathDest(string path, string destination)
 {
-	int i = findpath(path);
+	int i = findPath(path);
 	if(i == -1)
 		return false;
 	
-	rentry * ent = m_routeitems[i];
-	ent->adddest(destination);
+	rentry * ent = m_nodeitems[i];
+	ent->addDest(destination);
 
     return true;
 }
 
-bool rtable::removepathdest(string path, string destination)
+bool rtable::removePathDest(string path, string destination)
 {
-	int i = findpath(path);
+	int i = findPath(path);
 	if(i == -1)
 		return false;
 	
-	rentry * ent = m_routeitems[i];
-	ent->removedest(destination);
+	rentry * ent = m_nodeitems[i];
+	ent->removeDest(destination);
 
     return true;
 }

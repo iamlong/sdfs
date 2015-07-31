@@ -18,7 +18,7 @@ class droute {
 
     virtual int appenddestination(string path, string dest);
 
-    virtual int removedestination(string path, string dest);
+    virtual int removeDestination(string path, string dest);
 
  public:
     

@@ -20,24 +20,24 @@ class rtable {
 
 	//find destination of given path
         
-	int findpath(string path);
+	int findPath(string path);
 	
 	//get dests by given index.
-	vector <dest *> * getItemDests(int i);
+	vector <dest *> * getPathItemDests(int i);
 	
-	rentry * getItem(int i);
+	rentry * getPathItem(int i);
     
 	//add a new path to routeitems with destinations set
-    bool addpath(string path, string destinations);
+    bool addPath(string path, string destinations);
 
 	//delete a path and related destinations 
-    bool deletepath(string path);
+    bool deletePath(string path);
 
-    bool refreshpath(string path, string destinations);
+    bool refreshPath(string path, string destinations);
 
-	bool addpathdest(string path, string destination);
+	bool addPathDest(string path, string destination);
 	
-    bool removepathdest(string path, string destination);
+    bool removePathDest(string path, string destination);
 
  private:
 
@@ -49,7 +49,8 @@ class rtable {
     /**
      * @element-type rentry
      */
-    vector< rentry * > m_routeitems;
+    vector< rentry * > m_nodeitems;
+    vector< rentry * > m_blockitems;
 };
 
 #endif // rtable_h

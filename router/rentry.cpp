@@ -5,11 +5,11 @@
      */
 
 
-rentry::rentry(string path)
+rentry::rentry(string key)
 {
-    m_path = path;
+    m_key = key;
     m_hash_size = hash_size;
-    utils::hash(path, m_hash);
+    utils::hash(m_key, m_hash);
 }
 
 bool rentry::match(const char * comphash)
@@ -21,27 +21,27 @@ bool rentry::match(const char * comphash)
         
 }
 
-int rentry::refreshdests(const string destsString)
+int rentry::refreshDests(const string destsString)
 {
     //dest fornamt should be like "ip@port;ip@port"
     //or we can replace ip with hostname like "hostname@port;ip@port"
-    cleandests();
+    cleanDests();
     int commpos;
     string tempstr = destsString;
 	
 	commpos = tempstr.find(';');
 	while(commpos!=string::npos){
-		adddest(tempstr.substr(0,commpos));
+		addDest(tempstr.substr(0,commpos));
 		tempstr = tempstr.substr(commpos+1);
 		commpos = tempstr.find(';');
 	}
 	if(tempstr.find("@")!=string::npos)
-		adddest(tempstr);
+		addDest(tempstr);
 	
     return m_dests.size();   
 }
 
-void rentry::cleandests()
+void rentry::cleanDests()
 {
     int size = m_dests.size();
     if(size <= 0)
@@ -71,7 +71,7 @@ string rentry::toString()
 	return str;
         
 }
-bool rentry::adddest(const string deststr)
+bool rentry::addDest(const string deststr)
 {
 	dest * destbuff = new dest(deststr);
 	for (int i = 0; i<m_dests.size();i++){
@@ -85,7 +85,7 @@ bool rentry::adddest(const string deststr)
 	return true;
 }
 
-bool rentry::removedest(string deststr)
+bool rentry::removeDest(string deststr)
 {
 	dest tempdest (deststr);
 	bool removed = false;
@@ -105,5 +105,5 @@ vector<dest*> * rentry::getDests(){
 
 rentry::~rentry()
 {
-	cleandests();
+	cleanDests();
 }

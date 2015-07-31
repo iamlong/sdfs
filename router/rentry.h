@@ -18,7 +18,7 @@ class rtable;
 class rentry {
 
  public:
-    rentry(string reqpath);
+    rentry(string key);
 	~rentry();
 
     static const int hash_size = DIGEST_LEN;
@@ -26,22 +26,22 @@ class rentry {
     bool match(const char * comphash);
 
     //return how many dest items are in the m_dests.
-    int refreshdests(const string destsString);
+    int refreshDests(const string destsString);
     
     vector<dest *> * getDests();
 
-    bool adddest(const string dest);
+    bool addDest(const string dest);
 
-    bool removedest(const string dest);
+    bool removeDest(const string dest);
     
     string toString();
 
-	void cleandests();
+	void cleanDests();
 	
  private:
     char m_hash[hash_size];
     unsigned int m_hash_size;
-    string m_path;
+    string m_key;
     unsigned int m_path_size;
     vector< dest * > m_dests;
     
