@@ -33,6 +33,9 @@ vector <dest *> * rtable::getItemDests(int i){
 	return m_routeitems[i]->getDests();
 }
 
+rentry * rtable::getItem(int i){
+	return m_routeitems[i];
+}
 bool rtable::addpath(string path, string destinations)
 {
 	if(findpath(path)!=-1)

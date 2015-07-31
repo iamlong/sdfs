@@ -1,6 +1,6 @@
 OBJS = rtable.o dest.o rentry.o
-LDDIR = -L../sha1
-LDMODULE = -lsha1
+LDDIR = -L../sha1 -L../util
+LDMODULE = -lsha1 -lutils
 
 all: $(OBJS)
 

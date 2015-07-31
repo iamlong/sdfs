@@ -22,7 +22,10 @@ class rtable {
         
 	int findpath(string path);
 	
+	//get dests by given index.
 	vector <dest *> * getItemDests(int i);
+	
+	rentry * getItem(int i);
     
 	//add a new path to routeitems with destinations set
     bool addpath(string path, string destinations);
