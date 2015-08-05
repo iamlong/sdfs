@@ -1,17 +1,17 @@
 # Project: sdfs
 # Makefile created by Dev-C++ 5.11
 
-CPP      = g++.exe
-CC       = gcc.exe
+CPP      = g++.exe -D__DEBUG__
+CC       = gcc.exe -D__DEBUG__
 WINDRES  = windres.exe
-OBJ      = router/dest.o router/droute.o router/rentry.o router/rtable.o sha1/sha1.o util/utils.o
-LINKOBJ  = router/dest.o router/droute.o router/rentry.o router/rtable.o sha1/sha1.o util/utils.o
-LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc
+OBJ      = router/dest.o router/droute.o router/rentity.o router/rtable.o sha1/sha1.o util/utils.o
+LINKOBJ  = router/dest.o router/droute.o router/rentity.o router/rtable.o sha1/sha1.o util/utils.o
+LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc -g3
 INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
 CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
 BIN      = libsdfs.a
-CXXFLAGS = $(CXXINCS) 
-CFLAGS   = $(INCS) 
+CXXFLAGS = $(CXXINCS) -g3 -fkeep-inline-functions
+CFLAGS   = $(INCS) -g3 -fkeep-inline-functions
 RM       = rm.exe -f
 
 .PHONY: all all-before all-after clean clean-custom
@@ -31,8 +31,8 @@ router/dest.o: router/dest.cpp
 router/droute.o: router/droute.cpp
 	$(CPP) -c router/droute.cpp -o router/droute.o $(CXXFLAGS)
 
-router/rentry.o: router/rentry.cpp
-	$(CPP) -c router/rentry.cpp -o router/rentry.o $(CXXFLAGS)
+router/rentity.o: router/rentity.cpp
+	$(CPP) -c router/rentity.cpp -o router/rentity.o $(CXXFLAGS)
 
 router/rtable.o: router/rtable.cpp
 	$(CPP) -c router/rtable.cpp -o router/rtable.o $(CXXFLAGS)

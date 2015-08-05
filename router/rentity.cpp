@@ -1,18 +1,18 @@
-#include "rentry.h"
+#include "rentity.h"
 
     /** 
-     *  rentry stands for an inode entry for a file or directory in the file system. It actually referencing to a network location of the filenode structure. This filenode structure include the information of  
+     *  rentity stands for an inode entry for a file or directory in the file system. It actually referencing to a network location of the filenode structure. This filenode structure include the information of  
      */
 
 
-rentry::rentry(string key)
+rentity::rentity(string key)
 {
     m_key = key;
     m_hash_size = hash_size;
     utils::hash(m_key, m_hash);
 }
 
-bool rentry::match(const char * comphash)
+bool rentity::match(const char * comphash)
 {
 	if(memcmp(m_hash, comphash, DIGEST_LEN)==0)
         return true;
@@ -21,7 +21,7 @@ bool rentry::match(const char * comphash)
         
 }
 
-int rentry::refreshDests(const string destsString)
+int rentity::refreshDests(const string destsString)
 {
     //dest fornamt should be like "ip@port;ip@port"
     //or we can replace ip with hostname like "hostname@port;ip@port"
@@ -41,7 +41,7 @@ int rentry::refreshDests(const string destsString)
     return m_dests.size();   
 }
 
-void rentry::cleanDests()
+void rentity::cleanDests()
 {
     int size = m_dests.size();
     if(size <= 0)
@@ -57,7 +57,7 @@ void rentry::cleanDests()
     m_dests.clear(); 
 }
 
-string rentry::toString()
+string rentity::toString()
 {
     int size = m_dests.size();
     string str;
@@ -71,7 +71,7 @@ string rentry::toString()
 	return str;
         
 }
-bool rentry::addDest(const string deststr)
+bool rentity::addDest(const string deststr)
 {
 	dest * destbuff = new dest(deststr);
 	for (int i = 0; i<m_dests.size();i++){
@@ -85,7 +85,7 @@ bool rentry::addDest(const string deststr)
 	return true;
 }
 
-bool rentry::removeDest(string deststr)
+bool rentity::removeDest(string deststr)
 {
 	dest tempdest (deststr);
 	bool removed = false;
@@ -99,11 +99,11 @@ bool rentry::removeDest(string deststr)
     return removed;
 }
 
-vector<dest*> * rentry::getDests(){
+vector<dest*> * rentity::getDests(){
 	return &m_dests;
 }
 
-rentry::~rentry()
+rentity::~rentity()
 {
 	cleanDests();
 }

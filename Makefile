@@ -3,8 +3,8 @@
 
 CPP      = g++.exe
 CC       = gcc.exe
-OBJ      = router/dest.o router/droute.o router/rentry.o router/rtable.o sha1/sha1.o util/utils.o
-LINKOBJ  = router/dest.o router/droute.o router/rentry.o router/rtable.o sha1/sha1.o util/utils.o
+OBJ      = router/dest.o router/droute.o router/rentity.o router/rtable.o sha1/sha1.o util/utils.o
+LINKOBJ  = router/dest.o router/droute.o router/rentity.o router/rtable.o sha1/sha1.o util/utils.o
 LIBS     = 
 INCS     =
 CXXINCS  = 
@@ -30,8 +30,8 @@ router/dest.o: router/dest.cpp
 router/droute.o: router/droute.cpp
 	$(CPP) -c router/droute.cpp -o router/droute.o $(CXXFLAGS)
 
-router/rentry.o: router/rentry.cpp
-	$(CPP) -c router/rentry.cpp -o router/rentry.o $(CXXFLAGS)
+router/rentity.o: router/rentity.cpp
+	$(CPP) -c router/rentity.cpp -o router/rentity.o $(CXXFLAGS)
 
 router/rtable.o: router/rtable.cpp
 	$(CPP) -c router/rtable.cpp -o router/rtable.o $(CXXFLAGS)

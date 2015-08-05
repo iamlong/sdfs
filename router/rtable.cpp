@@ -15,7 +15,7 @@ rtable::~rtable(){
 }
 int rtable::findPath(string path)
 {
-	char hash[rentry::hash_size]; 
+	char hash[rentity::hash_size]; 
 	utils::hash(path, hash);
 	int i;
 	int size = m_nodeitems.size();
@@ -33,14 +33,14 @@ vector <dest *> * rtable::getPathItemDests(int i){
 	return m_nodeitems[i]->getDests();
 }
 
-rentry * rtable::getPathItem(int i){
+rentity * rtable::getPathItem(int i){
 	return m_nodeitems[i];
 }
 bool rtable::addPath(string path, string destinations)
 {
 	if(findPath(path)!=-1)
 		return false;
-	rentry *newitem = new rentry(path);
+	rentity *newitem = new rentity(path);
 	newitem->refreshDests(destinations);
 	
 	m_nodeitems.push_back(newitem);
@@ -64,7 +64,7 @@ bool rtable::refreshPath(string path, string destinations)
 	if(i == -1)
 		return false;
 	
-	rentry * ent = m_nodeitems[i];
+	rentity * ent = m_nodeitems[i];
 	ent->refreshDests(destinations);
 		
     return true;
@@ -76,7 +76,7 @@ bool rtable::addPathDest(string path, string destination)
 	if(i == -1)
 		return false;
 	
-	rentry * ent = m_nodeitems[i];
+	rentity * ent = m_nodeitems[i];
 	ent->addDest(destination);
 
     return true;
@@ -88,7 +88,7 @@ bool rtable::removePathDest(string path, string destination)
 	if(i == -1)
 		return false;
 	
-	rentry * ent = m_nodeitems[i];
+	rentity * ent = m_nodeitems[i];
 	ent->removeDest(destination);
 
     return true;

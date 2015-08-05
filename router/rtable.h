@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "rentry.h"
+#include "rentity.h"
 
 //#include "droute.h"
 
@@ -25,7 +25,7 @@ class rtable {
 	//get dests by given index.
 	vector <dest *> * getPathItemDests(int i);
 	
-	rentry * getPathItem(int i);
+	rentity * getPathItem(int i);
     
 	//add a new path to routeitems with destinations set
     bool addPath(string path, string destinations);
@@ -47,10 +47,10 @@ class rtable {
     //droute * m_router;
 
     /**
-     * @element-type rentry
+     * @element-type rentity
      */
-    vector< rentry * > m_nodeitems;
-    vector< rentry * > m_blockitems;
+    vector< rentity * > m_nodeitems;
+    vector< rentity * > m_blockitems;
 };
 
 #endif // rtable_h

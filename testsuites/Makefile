@@ -2,7 +2,7 @@ INCDIR = -I../include
 LDDIR = -L../ -L../external 
 LDMOULE = -lsdfs -lgtest 
 
-OBJS = testrtable.o testdest.o testrentry.o
+OBJS = testrtable.o testdest.o testrentity.o
 
 all: $(OBJS)
 
