@@ -29,7 +29,7 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
 CompilerSettings=0000000000000000001000000
-UnitCount=15
+UnitCount=16
 
 [VersionInfo]
 Major=1
@@ -191,9 +191,19 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit15]
-FileName=fs\rprocess.h
+FileName=fs\structures.h
 CompileCpp=1
 Folder=fs
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit16]
+FileName=util\stdtype.h
+CompileCpp=1
+Folder=util
 Compile=1
 Link=1
 Priority=1000
