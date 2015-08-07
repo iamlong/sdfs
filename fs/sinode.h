@@ -3,6 +3,8 @@
 
 #include "../router/dest.h"
 #include "structures.h"
+#include "../util/stdtype.h"
+#include "siblock.h"
 #include <vector>
 #include <string>
 
@@ -29,57 +31,60 @@ using namespace std;
 class sinode{
 		
 	public:
+		
+		sinode(string key, sinode_type nodetype);
+		
 		//get times
-		time_t getCreateTime();
-		time_t getModifiedTime();
-		time_t getAccessTime();
-		time_t getChangeTime();
+//		time_t getCreateTime();
+//		time_t getModifiedTime();
+//		time_t getAccessTime();
+//		time_t getChangeTime();
 		
 		//Permission
-		uint32_t getPermission();
-		uint32_t getOwnerPermission();
-		uint32_t getsetGroupPermission();
-		uint32_t getOtherPermission();
-		bool setPermission(unisnged int_32 p);
-		bool setOwnerPermission(uint32_t p);
-		bool setGroupPermission(uint32_t p);
-		bool setOtherPermission(uint32_t p);
+//		uint32_t getPermission();
+//		uint32_t getOwnerPermission();
+//		uint32_t getsetGroupPermission();
+//		uint32_t getOtherPermission();
+//		bool setPermission(unisnged int_32 p);
+//		bool setOwnerPermission(uint32_t p);
+//		bool setGroupPermission(uint32_t p);
+//		bool setOtherPermission(uint32_t p);
 		
 		//size
-		unsigned int_32 getSizeInBlock();
-		unsigned int_32 getSizeInByte();
+		uint32_t getSizeInBlock();
+		uint32_t getSizeInByte();
 		
 		//remote process
-		vector< rprocess * > getReadProcesses();
-		vector< rprocess * > getWriteProcesses();
-		bool addReadProcess(string processString);
-		bool removeReadProcess(string processString);
-		bool addWriteProcess(string processString);
-		bool removeWriteProcess(string processString);
+//		vector< rprocess * > getReadProcesses();
+//		vector< rprocess * > getWriteProcesses();
+//		bool addReadProcess(string processString);
+//		bool removeReadProcess(string processString);
+//		bool addWriteProcess(string processString);
+//		bool removeWriteProcess(string processString);
 		
 		//siBlocks
-		vector < siblock *> getSiBlocks();
+		uint32_t getSiBlockSize();
+		siblock * getSiBlock(int index);
 		bool addSiBlock(siblock *);
 		bool removeSiBlock(int index);
 		
 		//Serialize to BLOB and Deserialize from BLOB
 		memblock * toBlob();
-		fromBlob(memblock *);
+		fromBlob(memblock * p);
 				
 	private:
-		nodeid m_id;
-		uint32_t m_permission;
-		uint32_t m_size_in_block;
-		uint32_t m_size_in_byte;
-		time_t m_create_time;
-		time_t m_modified_time;
-		time_t m_access_time;
-		time_t m_change_time;
+		nodebase m_base;
 		vector< rprocess * > m_readrprocess;
 		vector< rprocess * > m_writerprocess;
 		vector< siblock * > m_siblocks;
 		
+		//hold the memblock which is created by toBlob. So when the object destory, sinode should responsible to release the memory. 
+		//this property should just hold the memblock which is created by itself. 
+		memblock * m_blob; 
 		
+		//caculate the byte size of the sinode object
+		int calcsize();
+				
 };
 
-#enfif //sinode_h
+#endif //sinode_h

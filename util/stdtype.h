@@ -1,3 +1,5 @@
+#ifndef stdtype_h
+#define stdtype_h
   /* TYPE DEFINITIONS */
 typedef signed char int8_t;
 typedef short int16_t;
@@ -29,8 +31,8 @@ typedef unsigned short uint_fast16_t;
 typedef unsigned long uint_fast32_t;
 typedef unsigned long long uint_fast64_t;
 
-typedef long intptr_t;
-typedef unsigned long uintptr_t;
+//typedef long intptr_t;
+//typedef unsigned long uintptr_t;
 
 typedef long long intmax_t;
 typedef unsigned long long uintmax_t;
@@ -104,10 +106,10 @@ typedef unsigned long long uintmax_t;
 #define SIG_ATOMIC_MIN    INT32_MIN
 #define SIG_ATOMIC_MAX    INT32_MAX
 
-#define SIZE_MAX     UINT32_MAX
+//#define SIZE_MAX     UINT32_MAX
 
-#define WCHAR_MIN    0
-#define WCHAR_MAX    UINT16_MAX
+//#define WCHAR_MIN    0
+//#define WCHAR_MAX    UINT16_MAX
 
 #define WINT_MIN     0
 #define WINT_MAX     UINT16_MAX
@@ -115,3 +117,5 @@ typedef unsigned long long uintmax_t;
 #define INTMAX_MIN        (-0x7fffffffffffffff - 1)
 #define INTMAX_MAX        0x7fffffffffffffff
 #define UINTMAX_MAX       0xffffffffffffffff
+
+#endif

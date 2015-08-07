@@ -1,7 +1,9 @@
-#ifdefine rprocess_h
+#ifndef rprocess_h
 #define rprocess_h
 
 #include <string>
+#include "../util/utils.h"
+#include "../util/stdtype.h"
 
 using namespace std;
 
@@ -28,15 +30,23 @@ struct memblock{
 };
 
 enum sinode_type{
-	file = 1;
-	path = 2;
-	link = 3;
+	
+	file = 1,
+	path = 2,
+	link = 3
 };
 
-struct nodeid{
+struct nodebase{
 	static const int hash_size = DIGEST_LEN;
 	char m_hash[DIGEST_LEN];
 	string m_path;
 	sinode_type m_type;
+	uint32_t m_permission;
+	uint32_t m_size_in_block;
+	uint32_t m_size_in_byte;
+	time_t m_create_time;
+	time_t m_modified_time;
+	time_t m_access_time;
+	time_t m_change_time;
 };
 #endif
