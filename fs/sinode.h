@@ -84,6 +84,9 @@ class sinode{
 		
 		//caculate the byte size of the sinode object
 		int calcsize();
+		
+		//push byte from rprocess vector into BLOB
+		char * pushinprocess(char * head, vector< rprocess * > * processes);
 				
 };
 
