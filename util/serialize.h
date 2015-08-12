@@ -5,7 +5,7 @@
 class ISerialize{
 	public:
 		virtual int getPersistentSizeInByte()=0;
-		virtual bool Serialize(uint8_t * buffer, int buff_size)=0;
+		virtual bool Serialize(Serializer * inSerializer) = 0;
 		virtual bool DeSerialize(uint8_t * buff, int buff_size)=0;
 		
 	protected:

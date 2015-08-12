@@ -6,32 +6,20 @@ int processlist::getPersistentSizeInByte(){
 	return m_persistent_size;
 }
 
-bool processlist::Serialize(uint8_t * buffer, int buff_size){
+bool processlist::Serialize(Serializer * inSerializer){
 	
-	if(buff_size<m_persistent_size)
-		return false;
-		
-	uint8_t * head = buffer;
+	inSerializer->fillBytes(m_start_sig, sizeof(m_start_sig));
 	
-	memcpy(head, m_start_sig, sizeof(m_start_sig));
-	head += sizeof(m_start_sig);
-	
-	memcpy(head, &m_persistent_size, sizeof(m_persistent_size));
-	head += sizeof(m_persistent_size);
+	inSerializer->fillBytes(&m_persistent_size, sizeof(m_persistent_size));
 	
 	int size = m_process.size();
 	
 	for(int i = 0; i <size; i++){
 		rprocess * trp= (m_process)[i];
-		memcpy(head, trp, sizeof(rprocess));
-		head +=sizeof(rprocess);
+		if(!inSerializer->fillBytes(trp, sizeof(rprocess)))
+			return false;
 	}
 	
-	memcpy(head, m_start_sig, sizeof(m_end_sig));
-	
-	return true;
-}
-
-bool processlist::Serialize(uint8_t * buffer, int buff_size){
+	inSerializer->fillBytes(m_end_sig, sizeof(m_end_sig));
 	
 }

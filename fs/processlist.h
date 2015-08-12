@@ -11,7 +11,7 @@ class processlist:public ISerialize{
 	
 	public:
 		int getPersistentSizeInByte();
-		bool Serialize(uint8_t * buffer, int buff_size);
+		bool Serialize(Serializer * inSerializer);
 		bool DeSerialize(uint8_t * buff, int buff_size);
 	private:
 		vector<rprocess *> m_process;
