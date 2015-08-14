@@ -1,4 +1,5 @@
-#include "Serializer.h"
+#include "serializer.h"
+#include <memory.h>
 
 Serializer::Serializer(int PersistentSize){
 	
@@ -17,7 +18,7 @@ bool Serializer::fillBytes(uint8_t * fillin, int size){
 	if (size + m_used_size>m_buff_size)
 		return false;
 		
-	memcpy(m_buffer, fillin, size);
+	memcpy(m_buffer+m_used_size, fillin, size);
 	m_used_size += size;
 	
 	return true;
@@ -31,4 +32,20 @@ bool Serializer::fillObject(ISerialize * obj){
 		return false;
 	
 	obj->Serialize(this);
+}
+
+int Serializer::getUsedSize(){
+	return m_used_size;
+}
+
+int Serializer::getLeftSize(){
+	return m_buff_size - m_used_size;
+}
+
+int Serializer::getSize(){
+	return m_buff_size;
+}
+
+Serializer::~Serializer(){
+	delete m_buffer;
 }

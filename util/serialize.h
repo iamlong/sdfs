@@ -1,6 +1,9 @@
 #ifndef serialize_h
 #define serialize_h
 #include "../util/stdtype.h"
+#include "serializer.h"
+
+class Serializer;
 
 class ISerialize{
 	public:

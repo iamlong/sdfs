@@ -3,6 +3,9 @@
 
 #include "serialize.h"
 #include "stdtype.h"
+
+class ISerialize;
+
 class Serializer
 {
 	public:
@@ -10,6 +13,9 @@ class Serializer
 		uint8_t * getFilledBuffer();
 		bool fillBytes(uint8_t * fillin, int size);
 		bool fillObject(ISerialize * obj);
+		int getUsedSize();
+		int getLeftSize();
+		int getSize();
 		~Serializer();
 		
 	private:

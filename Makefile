@@ -3,8 +3,8 @@
 
 CPP      = g++.exe
 CC       = gcc.exe
-OBJ      = router/dest.o router/droute.o router/rentity.o router/rtable.o sha1/sha1.o util/utils.o
-LINKOBJ  = router/dest.o router/droute.o router/rentity.o router/rtable.o sha1/sha1.o util/utils.o
+OBJ      = router/dest.o router/droute.o router/rentity.o router/rtable.o sha1/sha1.o util/utils.o fs/sinode.o fs/processlist.o util/serializer.o
+LINKOBJ  = router/dest.o router/droute.o router/rentity.o router/rtable.o sha1/sha1.o util/utils.o fs/sinode.o fs/processlist.o util/serializer.o
 LIBS     = 
 INCS     =
 CXXINCS  = 
@@ -12,6 +12,7 @@ BIN      = libsdfs.a
 CXXFLAGS = $(CXXINCS) 
 CFLAGS   = $(INCS) 
 RM       = rm.exe -f
+
 
 .PHONY: all all-before all-after clean clean-custom
 
@@ -41,3 +42,12 @@ sha1/sha1.o: sha1/sha1.cpp
 
 util/utils.o: util/utils.cpp
 	$(CPP) -c util/utils.cpp -o util/utils.o $(CXXFLAGS)
+
+fs/sinode.o: fs/sinode.cpp
+	$(CPP) -c fs/sinode.cpp -o fs/sinode.o $(CXXFLAGS)
+
+fs/processlist.o: fs/processlist.cpp
+	$(CPP) -c fs/processlist.cpp -o fs/processlist.o $(CXXFLAGS)
+
+util/serializer.o: util/serializer.cpp
+	$(CPP) -c util/serializer.cpp -o util/serializer.o $(CXXFLAGS)
