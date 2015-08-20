@@ -4,12 +4,13 @@
 #include "serializer.h"
 
 class Serializer;
+class DeSerializer;
 
 class ISerialize{
 	public:
 		virtual int getPersistentSizeInByte()=0;
 		virtual bool Serialize(Serializer * inSerializer) = 0;
-		virtual bool DeSerialize(uint8_t * buff, int buff_size)=0;
+		virtual bool DeSerialize(DeSerializer * inDeSerializer)=0;
 		
 	protected:
 		char m_start_sig[2];

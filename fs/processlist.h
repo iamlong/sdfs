@@ -4,15 +4,17 @@
 #include "../util/serialize.h"
 #include "structures.h"
 #include <vector>
+#include "../util/sig.h"
 
 using namespace std;
 
 class processlist:public ISerialize{
 	
 	public:
+		processlist();
 		int getPersistentSizeInByte();
 		bool Serialize(Serializer * inSerializer);
-		bool DeSerialize(uint8_t * buff, int buff_size);
+		bool DeSerialize(DeSerializer * inDeSerializer);
 	private:
 		vector<rprocess *> m_process;
 };

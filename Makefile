@@ -1,8 +1,8 @@
 # Project: sdfs
 # Makefile created by Dev-C++ 5.11
 
-CPP      = g++.exe
-CC       = gcc.exe
+CPP      = g++.exe -g
+CC       = gcc.exe -g
 OBJ      = router/dest.o router/droute.o router/rentity.o router/rtable.o sha1/sha1.o util/utils.o fs/sinode.o fs/processlist.o util/serializer.o
 LINKOBJ  = router/dest.o router/droute.o router/rentity.o router/rtable.o sha1/sha1.o util/utils.o fs/sinode.o fs/processlist.o util/serializer.o
 LIBS     = 

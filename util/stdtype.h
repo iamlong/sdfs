@@ -3,13 +3,17 @@
   /* TYPE DEFINITIONS */
 typedef signed char int8_t;
 typedef short int16_t;
-//typedef long int32_t;
-//typedef long long int64_t;
 
+#ifdef MGWIN
+typedef long int32_t;
+typedef long long int64_t;
+#endif
 typedef unsigned char uint8_t;
 typedef unsigned short uint16_t;
-//typedef unsigned long uint32_t;
-//typedef unsigned long long uint64_t;
+#ifdef MGWIN
+typedef unsigned long uint32_t;
+typedef unsigned long long uint64_t;
+#endif
 
 typedef signed char int_least8_t;
 typedef short int_least16_t;
@@ -33,6 +37,7 @@ typedef unsigned long long uint_fast64_t;
 
 //typedef long intptr_t;
 //typedef unsigned long uintptr_t;
+
 
 typedef long long intmax_t;
 typedef unsigned long long uintmax_t;
