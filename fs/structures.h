@@ -11,11 +11,10 @@ using namespace std;
 	 *	rprocess is used to describe a remote process which is opening file for read or write
 	*/
 struct rprocess{
-	
 	public:
-		string host;	//remote host ip or host name
+		char m_hash[DIGEST_LEN];
 		int process;	//process number which open the file, -1 if the process is dead
-	
+		char host[256];	//remote host ip or host name
 };
 
 	/**
