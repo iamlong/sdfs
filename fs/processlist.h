@@ -17,8 +17,11 @@ class processlist:public ISerialize{
 		bool DeSerialize(DeSerializer * inDeSerializer);
 		bool addProcess(string host, int pnumber);
 		bool removeProcess(string host, int pnumber);
-		
+		int findProcessIndex(string host, int pnumber);
+		rprocess * getRProcess(int index);
 	private:
 		vector<rprocess *> m_process;
+		string genKey(string host, int pno);
+		int findProcessbyHash(char hash[DIGEST_LEN] );
 };
 #endif

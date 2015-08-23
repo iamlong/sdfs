@@ -9,22 +9,52 @@ processlist::processlist(){
 	memcpy(m_end_sig, startsig, sizeof(m_end_sig));
 }
 
-bool processlist::addProcess(string host, int pnumber){
-	string key;
-	char temp[256];
-	sprintf(temp, "%d", pnumber);
-	key = temp;
-	key = key + "@" + host;
-	rprocess * proc = new rprocess();
-	utils::hash(key, proc->m_hash);
+int processlist::findProcessIndex(string host, int pnumber){
+
+	string key = genKey( host, pnumber);
 	
+	rprocess proc;
+	
+	utils::hash(key, proc.m_hash);
+	
+	return findProcessbyHash(proc.m_hash);
+	
+}
+
+int processlist::findProcessbyHash(char hash[DIGEST_LEN] ){
+
 	int process_list_size = m_process.size();
 	
 	for(int i;i<process_list_size; i++)
-		if(memcmp(proc->m_hash, m_process[i]->m_hash, DIGEST_LEN)==0){
-			delete proc;
-			return false;
-		};
+		if(memcmp(hash, m_process[i]->m_hash, DIGEST_LEN)==0)
+			return i;
+			
+	return -1;
+}
+
+string processlist::genKey(string host, int pno){
+		
+	string key;
+	char temp[256];
+	sprintf(temp, "%d", pno);
+	key = temp;
+	key = key + "@" + host;
+	
+	return key;
+}
+bool processlist::addProcess(string host, int pnumber){
+
+	string key = genKey(host, pnumber);
+	
+	rprocess * proc = new rprocess();
+	
+	utils::hash(key, proc->m_hash);
+
+	if(findProcessbyHash(proc->m_hash)>=0){
+		delete proc;
+		return false;
+	}
+	
 	
 	strcpy(proc->host,host.c_str());
 	proc->process = pnumber;
@@ -32,31 +62,35 @@ bool processlist::addProcess(string host, int pnumber){
 	return true;
 }
 
+rprocess * processlist::getRProcess(int index){
+	
+	if(index > m_process.size())
+		return NULL;
+	
+	return m_process[index];
+}
 bool processlist::removeProcess(string host, int pnumber){
-	string key;
-	char temp[256];
-	sprintf(temp, "%d", pnumber);
-	key = temp;
-	key = key + "@" + host;
-	rprocess * proc = new rprocess();
-	utils::hash(key, proc->m_hash);
+
+	string key = genKey(host, pnumber);
 	
-	int process_list_size = m_process.size();
+	rprocess proc;
 	
-	for(int i;i<process_list_size; i++)
-		if(memcmp(proc->m_hash, m_process[i]->m_hash, DIGEST_LEN)==0){
-			delete proc;
-			delete m_process[i];
-			m_process.erase(m_process.begin()+i);
-			return true;
-		};
+	utils::hash(key, proc.m_hash);
+	
+	int i = findProcessbyHash(proc.m_hash);
+	
+	if(i>=0){
+		delete getRProcess(i);
+		m_process.erase(m_process.begin()+i);
+		return true;
+	};
 		
 	return false;
 }
 
 int processlist::getPersistentSizeInByte(){
 	
-	m_persistent_size =  m_process.size() * sizeof(rprocess) + getISerializeSize();
+	m_persistent_size =  m_process.size() * sizeof(rprocess)+sizeof(uint16_t) + getISerializeSize();
 	return m_persistent_size;
 }
 
@@ -81,6 +115,7 @@ bool processlist::Serialize(Serializer * inSerializer){
 	}
 	
 	inSerializer->fillBytes((uint8_t *)m_end_sig, sizeof(m_end_sig));
+	return true;
 	
 }
 
@@ -91,7 +126,7 @@ bool processlist::DeSerialize(DeSerializer * inDeSerializer){
 	if(inDeSerializer->pullBytes(sig, sizeof(m_start_sig))!=sizeof(m_start_sig))
 		return false;
 	
-	if(sig, m_start_sig, sizeof(m_start_sig)!=0)
+	if(memcmp(sig, m_start_sig, sizeof(m_start_sig))!=0)
 		return false;
 		
 	if(inDeSerializer->pullBytes((uint8_t *)&m_persistent_size, sizeof(m_persistent_size))!=sizeof(m_persistent_size))
@@ -101,7 +136,7 @@ bool processlist::DeSerialize(DeSerializer * inDeSerializer){
 	
 	uint8_t * endsig = inDeSerializer->getFilledBuffer()+inDeSerializer->getPulledSize()+processbytes;
 	
-	if(endsig, m_end_sig, sizeof(m_end_sig)!=0)
+	if(memcmp(endsig, m_end_sig, sizeof(m_end_sig))!=0)
 		return false;
 	
 	uint16_t processsize;

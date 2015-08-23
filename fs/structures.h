@@ -32,7 +32,8 @@ enum sinode_type{
 	
 	file = 1,
 	path = 2,
-	link = 3
+	slink = 3,
+	hlink = 4
 };
 
 struct nodebase{

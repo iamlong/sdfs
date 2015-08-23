@@ -1,7 +1,9 @@
 #ifndef serialize_h
 #define serialize_h
-#include "../util/stdtype.h"
+//#include <sys/types.h>
+
 #include "serializer.h"
+#include "../util/stdtype.h"
 
 class Serializer;
 class DeSerializer;
@@ -13,9 +15,11 @@ class ISerialize{
 		virtual bool DeSerialize(DeSerializer * inDeSerializer)=0;
 		
 	protected:
+		
+		unsigned long m_persistent_size;
 		char m_start_sig[2];
 		char m_end_sig[2];
-		uint32_t m_persistent_size;
+
 		int getISerializeSize(){
 			return sizeof(m_start_sig) + sizeof(m_end_sig) + sizeof(m_persistent_size);
 		};
