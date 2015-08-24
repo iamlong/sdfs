@@ -12,6 +12,7 @@ class processlist:public ISerialize{
 	
 	public:
 		processlist();
+		~processlist();
 		int getPersistentSizeInByte();
 		bool Serialize(Serializer * inSerializer);
 		bool DeSerialize(DeSerializer * inDeSerializer);

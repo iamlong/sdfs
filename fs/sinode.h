@@ -7,6 +7,8 @@
 #include "siblock.h"
 #include <vector>
 #include <string>
+#include "../util/serialize.h"
+#include "processlist.h"
 
 using namespace std;
 
@@ -28,7 +30,7 @@ using namespace std;
 	 *			maybe I can add more
 	*/
 
-class sinode{
+class sinode: public ISerialize{
 		
 	public:
 		
@@ -64,30 +66,22 @@ class sinode{
 		
 		//siBlocks
 		uint32_t getSiBlockSize();
-		siblock * getSiBlock(int index);
-		bool addSiBlock(siblock *);
+		siblockref * getSiBlock(int index);
+		bool addSiBlock(siblockref *);
 		bool removeSiBlock(int index);
 		
-		//Serialize to BLOB and Deserialize from BLOB
-		memblock * toBlob();
-		fromBlob(memblock * p);
-				
+		//Serialization and DeSerialization
+		int getPersistentSizeInByte();
+		bool Serialize(Serializer * inSerializer);
+		bool DeSerialize(DeSerializer * inDeSerializer);
+		
 	private:
 		nodebase m_base;
-		vector< rprocess * > m_readrprocess;
-		vector< rprocess * > m_writerprocess;
-		vector< siblock * > m_siblocks;
+		processlist m_readrprocess;
+		processlist m_writerprocess;
+		vector<siblockref *> m_siblockrefs;
 		
-		//hold the memblock which is created by toBlob. So when the object destory, sinode should responsible to release the memory. 
-		//this property should just hold the memblock which is created by itself. 
-		memblock * m_blob; 
-		
-		//caculate the byte size of the sinode object
-		int calcsize();
-		
-		//push byte from rprocess vector into BLOB
-		char * pushinprocess(char * head, vector< rprocess * > * processes);
-				
+			
 };
 
 #endif //sinode_h

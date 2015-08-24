@@ -160,3 +160,12 @@ bool processlist::DeSerialize(DeSerializer * inDeSerializer){
 	}
 	return true;
 }
+
+processlist::~processlist(){
+	
+	int processsize = m_process.size();
+	for(int i = 0; i<processsize;i++)
+		delete m_process[i];
+	
+	m_process.clear();
+}
