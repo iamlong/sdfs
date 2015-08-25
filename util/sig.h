@@ -5,5 +5,7 @@
 #define PLIST_END_SIG "LP"
 #define SNODE_START_SIG "SI"
 #define SNODE_END_SIG "IS"
+#define SIBLKREF_START_SIG "SF"
+#define SIBLKREF_END_SIG "FS"
 
 #endif
