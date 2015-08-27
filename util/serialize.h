@@ -4,6 +4,7 @@
 
 #include "serializer.h"
 #include "../util/stdtype.h"
+#include <string.h>
 
 class Serializer;
 class DeSerializer;
@@ -20,9 +21,9 @@ class ISerialize{
 		char m_start_sig[2];
 		char m_end_sig[2];
 
-		int getISerializeSize(){
-			return sizeof(m_start_sig) + sizeof(m_end_sig) + sizeof(m_persistent_size);
-		};
+		int getISerializeSize();
+		
+		bool checkBuffer(DeSerializer * inDeSerializer);
 };
 
 #endif

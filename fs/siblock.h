@@ -1,5 +1,8 @@
 #ifndef siblock_h
 #define siblock_h
+#include "../util/serialize.h"
+#include "../sha1/sha1.h"
+#include "../util/sig.h"
 
 class siblockref: public ISerialize{
 	
@@ -14,7 +17,7 @@ class siblockref: public ISerialize{
 		bool DeSerialize(DeSerializer * inDeSerializer);
 		
 	private:
-		string m_key;
+		char m_key[50];
 		uint32_t m_seqnum;
 		uint32_t m_blocksize;
 		uint32_t m_usedsize;
@@ -28,7 +31,7 @@ class siblock {
 	uint32_t m_seqnum;
 	uint32_t m_blocksize;
 	uint32_t m_usedsize;
-	char m_hash[DIGSET_LEN];
+	char m_hash[DIGEST_LEN];
 	char m_data[]; //real data for the block;
 	
 };
