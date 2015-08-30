@@ -4,7 +4,9 @@
 
 siblockref::siblockref(string path){
 	
-	siblockref();
+	set_sig(SIBLKREF_START_SIG, SIBLKREF_END_SIG);
+	memset(m_hash, 0, DIGEST_LEN);
+	set_blocksize(4096);
 	
 	string key = path;
 	key += " timestamp(UTC): "+ time(NULL);
@@ -13,7 +15,8 @@ siblockref::siblockref(string path){
 
 siblockref::siblockref(string path, int blocksize){
 	
-	siblockref();
+	set_sig(SIBLKREF_START_SIG, SIBLKREF_END_SIG);
+	memset(m_hash, 0, DIGEST_LEN);
 	set_blocksize(blocksize);
 	
 	string key = path;
@@ -29,7 +32,8 @@ siblockref::siblockref(){
 }
 
 siblockref::siblockref(int blocksize){
-	siblockref();
+	set_sig(SIBLKREF_START_SIG, SIBLKREF_END_SIG);
+	memset(m_hash, 0, DIGEST_LEN);
 	set_blocksize(blocksize);
 }
 

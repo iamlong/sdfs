@@ -24,13 +24,13 @@ TEST (SIBLOCKTEST, PULLOBJECT) {
 	testblockref.set_prev_block(testblockref_prev.get_hash());
 	testblockref.set_next_block(testblockref_next.get_hash());
 
-	a.fillObject(&testblockref);
+	ASSERT_TRUE(a.fillObject(&testblockref));
 
 	siblockref testdesref;
 
 	DeSerializer b(a.getFilledBuffer(), a.getSize());
 
-	b.pullObject(&testdesref);
+	ASSERT_TRUE(b.pullObject(&testdesref));
 
 	ASSERT_TRUE(testblockref==testdesref);
 
