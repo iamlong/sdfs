@@ -1,12 +1,19 @@
 #include "serialize.h"
 
+
 int ISerialize::getISerializeSize(){
 	return sizeof(m_start_sig) + sizeof(m_end_sig) + sizeof(m_persistent_size);
 };
 
+void ISerialize::set_sig(const char start_sig[], const char end_sig[]){
+	//Every class inherited from ISerialize need to set it's start sig and end sig.
+	memcpy(m_start_sig, start_sig, sizeof(m_start_sig));
+	memcpy(m_end_sig, end_sig, sizeof(m_end_sig));
+}
+
 bool ISerialize::checkBuffer(DeSerializer * inDeSerializer){
 
-	uint8_t sig[sizeof(m_start_sig)];
+	sd_uint8_t sig[sizeof(m_start_sig)];
 
 	if(inDeSerializer->pullBytes(sig, sizeof(m_start_sig))!=sizeof(m_start_sig))
 		return false;
@@ -14,12 +21,12 @@ bool ISerialize::checkBuffer(DeSerializer * inDeSerializer){
 	if(memcmp(sig, m_start_sig, sizeof(m_start_sig))!=0)
 		return false;
 
-	if(inDeSerializer->pullBytes((uint8_t *)&m_persistent_size, sizeof(m_persistent_size))!=sizeof(m_persistent_size))
+	if(inDeSerializer->pullBytes((sd_uint8_t *)&m_persistent_size, sizeof(m_persistent_size))!=sizeof(m_persistent_size))
 		return false;
 		
 	int processbytes = m_persistent_size - getISerializeSize();
 	
-	uint8_t * endsig = inDeSerializer->getFilledBuffer()+inDeSerializer->getPulledSize()+processbytes;
+	sd_uint8_t * endsig = inDeSerializer->getFilledBuffer()+inDeSerializer->getPulledSize()+processbytes;
 	
 	if(memcmp(endsig, m_end_sig, sizeof(m_end_sig))!=0)
 		return false;

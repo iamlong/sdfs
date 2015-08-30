@@ -53,8 +53,8 @@ class sinode: public ISerialize{
 //		bool setOtherPermission(uint32_t p);
 		
 		//size
-		uint32_t getSizeInBlock();
-		uint32_t getSizeInByte();
+		sd_uint32_t getSizeInBlock();
+		sd_uint32_t getSizeInByte();
 		
 		//remote process
 //		vector< rprocess * > getReadProcesses();
@@ -65,7 +65,7 @@ class sinode: public ISerialize{
 //		bool removeWriteProcess(string processString);
 		
 		//siBlocks
-		uint32_t getSiBlockSize();
+		sd_uint32_t getSiBlockSize();
 		siblockref * getSiBlock(int index);
 		bool addSiBlock(siblockref *);
 		bool removeSiBlock(int index);

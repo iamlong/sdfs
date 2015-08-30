@@ -29,7 +29,7 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
 CompilerSettings=0000000000000000001000000
-UnitCount=26
+UnitCount=27
 
 [VersionInfo]
 Major=1
@@ -302,6 +302,16 @@ BuildCmd=
 FileName=fs\siblock.cpp
 CompileCpp=1
 Folder=fs
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit27]
+FileName=util\serialize.cpp
+CompileCpp=1
+Folder=util
 Compile=1
 Link=1
 Priority=1000

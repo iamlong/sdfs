@@ -3,10 +3,8 @@
 
 
 processlist::processlist(){
-	char startsig[]=PLIST_START_SIG;
-	char endsig[]=PLIST_END_SIG;
-	memcpy(m_start_sig, startsig, sizeof(m_start_sig));
-	memcpy(m_end_sig, startsig, sizeof(m_end_sig));
+	
+	set_sig(PLIST_START_SIG, PLIST_END_SIG);
 }
 
 int processlist::findProcessIndex(string host, int pnumber){
@@ -90,7 +88,7 @@ bool processlist::removeProcess(string host, int pnumber){
 
 int processlist::getPersistentSizeInByte(){
 	
-	m_persistent_size =  m_process.size() * sizeof(rprocess)+sizeof(uint16_t) + getISerializeSize();
+	m_persistent_size =  m_process.size() * sizeof(rprocess)+sizeof(sd_uint16_t) + getISerializeSize();
 	return m_persistent_size;
 }
 
@@ -99,22 +97,22 @@ bool processlist::Serialize(Serializer * inSerializer){
 	if(inSerializer->getLeftSize()<getPersistentSizeInByte())
 		return false;
 	
-	inSerializer->fillBytes((uint8_t *)m_start_sig, sizeof(m_start_sig));
+	inSerializer->fillBytes((sd_uint8_t *)m_start_sig, sizeof(m_start_sig));
 	
-	inSerializer->fillBytes((uint8_t *)&m_persistent_size, sizeof(m_persistent_size));
+	inSerializer->fillBytes((sd_uint8_t *)&m_persistent_size, sizeof(m_persistent_size));
 	
-	uint16_t size = m_process.size();
+	sd_uint16_t size = m_process.size();
 	
 	//fill in how many processes in the process list
-	inSerializer->fillBytes((uint8_t *)&size, sizeof(size));
+	inSerializer->fillBytes((sd_uint8_t *)&size, sizeof(size));
 	
 	for(int i = 0; i <size; i++){
 		rprocess * trp= (m_process)[i];
-		if(!inSerializer->fillBytes((uint8_t *)trp, sizeof(rprocess)))
+		if(!inSerializer->fillBytes((sd_uint8_t *)trp, sizeof(rprocess)))
 			return false;
 	}
 	
-	inSerializer->fillBytes((uint8_t *)m_end_sig, sizeof(m_end_sig));
+	inSerializer->fillBytes((sd_uint8_t *)m_end_sig, sizeof(m_end_sig));
 	return true;
 	
 }
@@ -124,14 +122,14 @@ bool processlist::DeSerialize(DeSerializer * inDeSerializer){
 	if(checkBuffer(inDeSerializer)!=true)
 		return false;
 	
-	uint16_t processsize;
+	sd_uint16_t processsize;
 	
-	if(inDeSerializer->pullBytes((uint8_t *)&processsize, sizeof(processsize))!=sizeof(processsize))
+	if(inDeSerializer->pullBytes((sd_uint8_t *)&processsize, sizeof(processsize))!=sizeof(processsize))
 		return false;
 	
 	for(int i = 0; i<processsize; i++){
 		rprocess * temp = new rprocess();
-		if(inDeSerializer->pullBytes((uint8_t *)temp, sizeof(rprocess))!=sizeof(rprocess)){
+		if(inDeSerializer->pullBytes((sd_uint8_t *)temp, sizeof(rprocess))!=sizeof(rprocess)){
 			//if get process item fail; clean up the current created process list;
 			for(int j = 0; j<i; j++){
 				rprocess * trp= (m_process)[j];

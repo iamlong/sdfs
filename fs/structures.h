@@ -41,9 +41,9 @@ struct nodebase{
 	char m_hash[DIGEST_LEN];
 	string m_path;
 	sinode_type m_type;
-	uint32_t m_permission;
-	uint32_t m_size_in_block;
-	uint32_t m_size_in_byte;
+	sd_uint32_t m_permission;
+	sd_uint32_t m_size_in_block;
+	sd_uint32_t m_size_in_byte;
 	time_t m_create_time;
 	time_t m_modified_time;
 	time_t m_access_time;

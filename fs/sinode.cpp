@@ -6,24 +6,23 @@
 
 sinode::sinode(string key, sinode_type nodetype ){
 	
-	char startsig[]=SNODE_START_SIG;
-	char endsig[]=SNODE_END_SIG;
-	
+	set_sig(SNODE_START_SIG, SNODE_END_SIG);
+
 	m_base.m_path = key;
 	utils::hash(key, m_base.m_hash);
 	m_base.m_type = nodetype;
 	
 }
 
-uint32_t sinode::getSizeInBlock(){
+sd_uint32_t sinode::getSizeInBlock(){
 	return m_base.m_size_in_block;
 }
 
-uint32_t sinode::getSizeInByte(){
+sd_uint32_t sinode::getSizeInByte(){
 	return m_base.m_size_in_byte;
 }
 
-uint32_t sinode::getSiBlockSize(){
+sd_uint32_t sinode::getSiBlockSize(){
 	return m_siblockrefs.size();
 }
 
@@ -63,7 +62,7 @@ int sinode::getPersistentSizeInByte(){
 	
 	size +=getISerializeSize(); //get base size of ISerialize
 	
-	size +=sizeof(uint32_t); //place to record how many siblocks
+	size +=sizeof(sd_uint32_t); //place to record how many siblocks
 	
 	return size;
 }

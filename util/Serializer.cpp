@@ -3,17 +3,17 @@
 
 Serializer::Serializer(int PersistentSize){
 	
-	m_buffer = new uint8_t[PersistentSize];
+	m_buffer = new sd_uint8_t[PersistentSize];
 	m_buff_size = PersistentSize;
 	m_used_size = 0;
 	
 }
 
-uint8_t * Serializer::getFilledBuffer(){
+sd_uint8_t * Serializer::getFilledBuffer(){
 	return m_buffer;
 }
 
-int Serializer::fillBytes(uint8_t * fillin, int size){
+int Serializer::fillBytes(sd_uint8_t * fillin, int size){
 	
 	int size_to_fill;
 	
@@ -54,7 +54,7 @@ Serializer::~Serializer(){
 	delete m_buffer;
 }
 
-DeSerializer::DeSerializer(uint8_t * buff, int buff_size){
+DeSerializer::DeSerializer(sd_uint8_t * buff, int buff_size){
 	m_buffer = buff;
 	m_buff_size = buff_size;
 	m_pulled_size = 0;
@@ -63,7 +63,7 @@ DeSerializer::DeSerializer(uint8_t * buff, int buff_size){
 DeSerializer::~DeSerializer(){
 	return;
 }
-uint8_t * DeSerializer::getFilledBuffer(){
+sd_uint8_t * DeSerializer::getFilledBuffer(){
 	return m_buffer;
 }
 
@@ -79,7 +79,7 @@ int DeSerializer::getTotalSize(){
 	return m_buff_size;
 }
 
-int DeSerializer::pullBytes(uint8_t * out, int size){
+int DeSerializer::pullBytes(sd_uint8_t * out, int size){
 	int size_to_pull;
 	
 	if(size > getLeftSize())

@@ -17,13 +17,14 @@ class ISerialize{
 		
 	protected:
 		
-		unsigned long m_persistent_size;
+		sd_uint32_t m_persistent_size;
 		char m_start_sig[2];
 		char m_end_sig[2];
 
 		int getISerializeSize();
 		
 		bool checkBuffer(DeSerializer * inDeSerializer);
+		void set_sig(const char start_sig[], const char end_sig[]);
 };
 
 #endif

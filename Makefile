@@ -3,8 +3,8 @@
 
 CPP      = g++.exe -g
 CC       = gcc.exe -g
-OBJ      = router/dest.o router/droute.o router/rentity.o router/rtable.o sha1/sha1.o util/utils.o fs/sinode.o fs/processlist.o util/serializer.o util/serialize.o
-LINKOBJ  = router/dest.o router/droute.o router/rentity.o router/rtable.o sha1/sha1.o util/utils.o fs/sinode.o fs/processlist.o util/serializer.o util/serialize.o
+OBJ      = router/dest.o router/droute.o router/rentity.o router/rtable.o sha1/sha1.o util/utils.o fs/sinode.o fs/siblock.o fs/processlist.o util/serializer.o util/serialize.o
+LINKOBJ  = router/dest.o router/droute.o router/rentity.o router/rtable.o sha1/sha1.o util/utils.o fs/sinode.o fs/siblock.o fs/processlist.o util/serializer.o util/serialize.o
 LIBS     = 
 INCS     =
 CXXINCS  = 
@@ -48,6 +48,9 @@ fs/sinode.o: fs/sinode.cpp
 
 fs/processlist.o: fs/processlist.cpp
 	$(CPP) -c fs/processlist.cpp -o fs/processlist.o $(CXXFLAGS)
+
+fs/siblock.o: fs/siblock.cpp
+	$(CPP) -c fs/siblock.cpp -o fs/siblock.o $(CXXFLAGS)
 
 util/serializer.o: util/serializer.cpp
 	$(CPP) -c util/serializer.cpp -o util/serializer.o $(CXXFLAGS)

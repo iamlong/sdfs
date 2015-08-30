@@ -1,19 +1,17 @@
 #ifndef stdtype_h
 #define stdtype_h
   /* TYPE DEFINITIONS */
-typedef signed char int8_t;
-typedef short int16_t;
+typedef signed char sd_int8_t;
+typedef short sd_int16_t;
 
-#ifdef MGWIN
-typedef long int32_t;
-typedef long long int64_t;
-#endif
-typedef unsigned char uint8_t;
-typedef unsigned short uint16_t;
-#ifdef MGWIN
-typedef unsigned long uint32_t;
-typedef unsigned long long uint64_t;
-#endif
+typedef int sd_int32_t;
+typedef long long sd_int64_t;
+
+typedef unsigned char sd_uint8_t;
+typedef unsigned short sd_uint16_t;
+
+typedef unsigned int sd_uint32_t;
+typedef unsigned long long sd_uint64_t;
 
 typedef signed char int_least8_t;
 typedef short int_least16_t;
