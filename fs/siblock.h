@@ -21,9 +21,11 @@ class siblockref: public ISerialize{
 		void set_seqnum(sd_uint32_t no);
 		void set_blocksize(sd_uint32_t size);
 		void set_usedsize(sd_uint32_t size);
+		void clean_next_block();
 		
 		bool operator==(const siblockref& compblock);
 		bool operator!=(const siblockref& compblock);
+		bool operator<(const siblockref& compblock);
 		
 		char* get_hash();
 		
@@ -40,6 +42,9 @@ class siblockref: public ISerialize{
 		char m_hash[DIGEST_LEN];
 		char m_next_block_hash[DIGEST_LEN];
 		char m_prev_block_hash[DIGEST_LEN];
+		
+		
+		void init();
 
 };
 

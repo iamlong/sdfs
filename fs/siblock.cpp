@@ -4,8 +4,7 @@
 
 siblockref::siblockref(string path){
 	
-	set_sig(SIBLKREF_START_SIG, SIBLKREF_END_SIG);
-	memset(m_hash, 0, DIGEST_LEN);
+	init();
 	set_blocksize(4096);
 	
 	string key = path;
@@ -15,8 +14,7 @@ siblockref::siblockref(string path){
 
 siblockref::siblockref(string path, int blocksize){
 	
-	set_sig(SIBLKREF_START_SIG, SIBLKREF_END_SIG);
-	memset(m_hash, 0, DIGEST_LEN);
+	init();
 	set_blocksize(blocksize);
 	
 	string key = path;
@@ -26,9 +24,16 @@ siblockref::siblockref(string path, int blocksize){
 }
 
 siblockref::siblockref(){
+	init();
+	set_blocksize(4096);
+}
+
+void siblockref::init(){
 	set_sig(SIBLKREF_START_SIG, SIBLKREF_END_SIG);
 	memset(m_hash, 0, DIGEST_LEN);
-	set_blocksize(4096);
+	memset(m_next_block_hash, 0, DIGEST_LEN);
+	memset(m_prev_block_hash, 0, DIGEST_LEN);
+	m_usedsize = 0;
 }
 
 siblockref::siblockref(int blocksize){
@@ -75,12 +80,20 @@ bool siblockref::operator!=(const siblockref& compblock){
 	return true;
 }
 
+bool siblockref::operator<(const siblockref& compblock){
+	return m_seqnum<compblock.m_seqnum;
+}
+
 char* siblockref::get_hash(){
 	return m_hash;
 }
 
 void siblockref::set_next_block(char nextblockhash[DIGEST_LEN]){
 	memcpy(m_next_block_hash, nextblockhash, sizeof(m_next_block_hash));
+}
+
+void siblockref::clean_next_block(){
+	memset(m_next_block_hash, 0, sizeof(m_next_block_hash));
 }
 
 void siblockref::set_prev_block(char prevblockhash[DIGEST_LEN]){
