@@ -9,7 +9,7 @@ sinode::sinode(string key, sinode_type nodetype ){
 	set_sig(SNODE_START_SIG, SNODE_END_SIG);
 
 	m_base.m_path = key;
-	utils::hash(key, m_base.m_hash);
+	utils::hash(key, (char *)m_base.m_hash);
 	m_base.m_type = nodetype;
 	
 }
@@ -34,6 +34,8 @@ bool sinode::addSiBlock(siblockref * b){
 	
 	sd_uint32_t size = getSiBlockSize();
 	
+	if(size == 0)
+		memcpy(m_base.m_start_block, b->get_hash(), sizeof(m_base.m_start_block));
 	for (int i = 0; i<size; i++)
 		if(*b==*getSiBlock(i))
 			return false;
@@ -53,18 +55,18 @@ bool sinode::removeSiBlock(sd_uint32_t index){
 
 sd_uint32_t sinode::getPersistentSizeInByte(){
 	
-	sd_uint32_t size =0;
-	size += sizeof(m_base); //siblock membersize
+	m_persistent_size =0;
+	m_persistent_size += sizeof(m_base); //siblock membersize
 
 	sd_uint32_t blocknum = m_siblockrefs.size();
 	for (sd_uint32_t i =0; i<blocknum; i++)
-		size +=m_siblockrefs[i]->getPersistentSizeInByte(); //all siblock membersize
+		m_persistent_size +=m_siblockrefs[i]->getPersistentSizeInByte(); //all siblock membersize
 	
-	size +=getISerializeSize(); //get base size of ISerialize
+	m_persistent_size +=getISerializeSize(); //get base size of ISerialize
 	
-	size +=sizeof(sd_uint32_t); //place to record how many siblocks
+	m_persistent_size +=sizeof(sd_uint32_t); //place to record how many siblocks
 	
-	return size;
+	return m_persistent_size;
 }
 
 //memblock * sinode::toBlob(){

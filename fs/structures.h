@@ -38,7 +38,8 @@ enum sinode_type{
 
 struct nodebase{
 	static const int hash_size = DIGEST_LEN;
-	char m_hash[DIGEST_LEN];
+	sd_uint8_t m_hash[DIGEST_LEN];
+	sd_uint8_t m_start_block[DIGEST_LEN];
 	string m_path;
 	sinode_type m_type;
 	sd_uint32_t m_permission;

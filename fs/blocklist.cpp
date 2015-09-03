@@ -43,7 +43,7 @@ bool siblocklist::deletefrom(sd_uint32_t index){
 		//we can permenently delete them afterwards
 		siblockref back = m_blocklist.back();
 		string removeblock;
-		removeblock.append(back.get_hash(), DIGEST_LEN);
+		removeblock.append((char *)back.get_hash(), DIGEST_LEN);
 		m_removeblocklist.push_back(removeblock);
 		
 		m_blocklist.pop_back();

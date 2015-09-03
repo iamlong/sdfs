@@ -49,7 +49,7 @@ void siblockref::set_key(string key){
 	int sizetohash = sizeof(m_key)<=key.size()?sizeof(m_key):key.size();
 	memcpy(m_key, key.data(), sizetohash);
 	key = key.substr(0, sizetohash);
-	utils::hash(key, m_hash); 
+	utils::hash(key, (char *)m_hash); 
 	
 }
 bool siblockref::operator==(const siblockref& compblock){
@@ -84,11 +84,11 @@ bool siblockref::operator<(const siblockref& compblock){
 	return m_seqnum<compblock.m_seqnum;
 }
 
-char* siblockref::get_hash(){
+sd_uint8_t * siblockref::get_hash(){
 	return m_hash;
 }
 
-void siblockref::set_next_block(char nextblockhash[DIGEST_LEN]){
+void siblockref::set_next_block(sd_uint8_t nextblockhash[DIGEST_LEN]){
 	memcpy(m_next_block_hash, nextblockhash, sizeof(m_next_block_hash));
 }
 
@@ -96,7 +96,7 @@ void siblockref::clean_next_block(){
 	memset(m_next_block_hash, 0, sizeof(m_next_block_hash));
 }
 
-void siblockref::set_prev_block(char prevblockhash[DIGEST_LEN]){
+void siblockref::set_prev_block(sd_uint8_t prevblockhash[DIGEST_LEN]){
 	memcpy(m_prev_block_hash, prevblockhash, sizeof(m_prev_block_hash));
 }
 
