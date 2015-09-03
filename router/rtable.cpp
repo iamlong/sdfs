@@ -13,7 +13,7 @@ rtable::rtable(){
 rtable::~rtable(){
 	
 }
-int rtable::findPath(string path)
+sd_int32_t rtable::findPath(string path)
 {
 	char hash[rentity::hash_size]; 
 	utils::hash(path, hash);
@@ -29,11 +29,11 @@ int rtable::findPath(string path)
     return i;
 }
 
-vector <dest *> * rtable::getPathItemDests(int i){
+vector <dest *> * rtable::getPathItemDests(sd_uint32_t i){
 	return m_nodeitems[i]->getDests();
 }
 
-rentity * rtable::getPathItem(int i){
+rentity * rtable::getPathItem(sd_uint32_t i){
 	return m_nodeitems[i];
 }
 bool rtable::addPath(string path, string destinations)

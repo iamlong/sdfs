@@ -5,13 +5,16 @@
 #include "serializer.h"
 #include "../util/stdtype.h"
 #include <string.h>
+#include <string>
 
 class Serializer;
 class DeSerializer;
 
+using namespace std;
+
 class ISerialize{
 	public:
-		virtual int getPersistentSizeInByte()=0;
+		virtual sd_uint32_t getPersistentSizeInByte()=0;
 		virtual bool Serialize(Serializer * inSerializer) = 0;
 		virtual bool DeSerialize(DeSerializer * inDeSerializer)=0;
 		
@@ -21,10 +24,11 @@ class ISerialize{
 		char m_start_sig[2];
 		char m_end_sig[2];
 
-		int getISerializeSize();
+		sd_uint32_t getISerializeSize();
 		
 		bool checkBuffer(DeSerializer * inDeSerializer);
 		void set_sig(const char start_sig[], const char end_sig[]);
+		static sd_uint32_t calcStringSize(string eval);
 };
 
 #endif

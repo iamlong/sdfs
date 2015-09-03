@@ -2,41 +2,48 @@
 #include "../util/serializer.h"
 #include "../fs/blocklist.h"
 #include <string.h>
+#include <ostream>
 
 using namespace std;
 
-/*TEST (BLOCKLISTTEST, PULLOBJECT) {
+
+TEST (BLOCKLISTTEST, TESTSerializeDeSerialize) {
 	
-	siblockref testblockref("/user/slib/abc.txt", 8192);
+	siblockref t1("/user/slib/abc.txt", 8192);
 	
-	//Serializer a(testblockref.getPersistentSizeInByte()); //create a buffer with 
+	siblockref t2("/user/slib/abc.txt", 8192);
+
+	siblockref t3("/user/slib/abc.txt", 8192);
+
+	ASSERT_TRUE(t1!=t2);
+	ASSERT_TRUE(t2!=t3);
+	ASSERT_TRUE(t3!=t1);
 	
-	//ASSERT_EQ(8+122, a.getSize());
+	siblocklist testlist;
 
-	siblockref testblockref_next("/user/slib/abc.txt", 8192);
+	testlist.appendBlock(t1);
+	testlist.appendBlock(t2);
+	testlist.appendBlock(t3);
 
-	siblockref testblockref_prev("/user/slib/abc.txt", 8192);
-
-	ASSERT_TRUE(testblockref!=testblockref_next);
-	ASSERT_TRUE(testblockref!=testblockref_prev);
-	ASSERT_TRUE(testblockref_next!=testblockref_prev);
+	ASSERT_TRUE(testlist.getBlock(0)!=testlist.getBlock(1));
+	ASSERT_TRUE(testlist.getBlock(1)!=testlist.getBlock(2));
+	ASSERT_TRUE(testlist.getBlock(2)!=testlist.getBlock(0));
 	
-	//testblockref.set_prev_block(testblockref_prev.get_hash());
-	//testblockref.set_next_block(testblockref_next.get_hash());
+	Serializer a(testlist.getPersistentSizeInByte());
 
-	//ASSERT_TRUE(a.fillObject(&testblockref));
+	ASSERT_TRUE(a.fillObject(&testlist));
 
-	//siblockref testdesref;
-
-	//DeSerializer b(a.getFilledBuffer(), a.getSize());
-
-	//ASSERT_TRUE(b.pullObject(&testdesref));
-
-	//ASSERT_TRUE(testblockref==testdesref);
-
-
+	DeSerializer b(a.getFilledBuffer(), a.getSize());
 	
-}*/
+	siblocklist testp;
+
+	ASSERT_TRUE(b.pullObject(&testp));
+
+	ASSERT_TRUE(testlist.getBlock(0)==testp.getBlock(0));
+	ASSERT_TRUE(testlist.getBlock(1)==testp.getBlock(1));
+	ASSERT_TRUE(testlist.getBlock(2)==testp.getBlock(2));
+
+}
 
 TEST (BLOCKLISTTEST, TESTLIST) {
 	
@@ -80,6 +87,18 @@ TEST (BLOCKLISTTEST, TESTDELETELIST) {
 	testlist.appendBlock(t1);
 	testlist.appendBlock(t2);
 	testlist.appendBlock(t3);
+
+	siblockref tm = testlist.getBlock(1);
+
+	cout<<"original seq_num:"<<tm.get_seqnum()<<"\n";
+
+	tm.set_seqnum(34);
+	
+	cout<<"modified seq_num:"<<tm.get_seqnum()<<"\n";
+
+	cout<<"In BlockList seq_num:"<<testlist.getBlock(1).get_seqnum()<<"\n";
+	
+	ASSERT_TRUE(tm!=testlist.getBlock(1));
 
 	ASSERT_TRUE(testlist.getBlock(0)!=testlist.getBlock(1));
 	ASSERT_TRUE(testlist.getBlock(1)!=testlist.getBlock(2));

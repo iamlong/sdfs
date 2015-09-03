@@ -20,12 +20,12 @@ class rtable {
 
 	//find destination of given path
         
-	int findPath(string path);
+	sd_int32_t findPath(string path);
 	
 	//get dests by given index.
-	vector <dest *> * getPathItemDests(int i);
+	vector <dest *> * getPathItemDests(sd_uint32_t i);
 	
-	rentity * getPathItem(int i);
+	rentity * getPathItem(sd_uint32_t i);
     
 	//add a new path to routeitems with destinations set
     bool addPath(string path, string destinations);

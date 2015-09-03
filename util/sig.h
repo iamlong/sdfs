@@ -7,5 +7,7 @@
 #define SNODE_END_SIG "IS"
 #define SIBLKREF_START_SIG "SF"
 #define SIBLKREF_END_SIG "FS"
+#define SIBLKLIST_START_SIG "BL"
+#define SIBLKLIST_END_SIG "LB"
 
 #endif

@@ -20,7 +20,7 @@ class testser : public ISerialize {
 		void reseta(int newa){a=newa;};
 		
 		
-		int getPersistentSizeInByte(){
+		sd_uint32_t getPersistentSizeInByte(){
 				m_persistent_size = sizeof(a)+sizeof(b)+sizeof(c)+getISerializeSize();
 				return m_persistent_size;
 		};

@@ -13,7 +13,7 @@ using namespace std;
 struct rprocess{
 	public:
 		char m_hash[DIGEST_LEN];
-		int process;	//process number which open the file, -1 if the process is dead
+		sd_uint32_t process;	//process number which open the file, -1 if the process is dead
 		char host[256];	//remote host ip or host name
 };
 

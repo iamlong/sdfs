@@ -6,6 +6,7 @@
 #include "../include/error.h"
 #include "dest.h"
 #include "../util/utils.h"
+#include "../util/stdtype.h"
 
 using namespace std;
 
@@ -26,12 +27,12 @@ class rentity {
     rentity(string key);
 	~rentity();
 
-    static const int hash_size = DIGEST_LEN;
+    static const sd_uint32_t hash_size = DIGEST_LEN;
 
     bool match(const char * comphash);
 
     //return how many dest items are in the m_dests.
-    int refreshDests(const string destsString);
+    sd_uint32_t refreshDests(const string destsString);
     
     vector<dest *> * getDests();
 
@@ -45,9 +46,9 @@ class rentity {
 	
  private:
     char m_hash[hash_size]; //m_hash is generated from m_key.
-    unsigned int m_hash_size; //size in byte of hash string. It's based on the hash methodology we choose; for SHA1, it sets to 20.
+    sd_uint32_t m_hash_size; //size in byte of hash string. It's based on the hash methodology we choose; for SHA1, it sets to 20.
     string m_key; //the original key of the given entry. it is actually the string name of a given object
-    unsigned int m_path_size;
+    sd_uint32_t m_path_size;
     vector< dest * > m_dests;
     
 

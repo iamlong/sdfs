@@ -1,5 +1,7 @@
 #include "serializer.h"
 #include <memory.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 Serializer::Serializer(int PersistentSize){
 	
@@ -30,12 +32,24 @@ int Serializer::fillBytes(sd_uint8_t * fillin, int size){
 
 bool Serializer::fillObject(ISerialize * obj){
 	
-	int objsize = obj->getPersistentSizeInByte();
+	sd_uint32_t objsize = obj->getPersistentSizeInByte();
 	
 	if(objsize+m_used_size > m_buff_size)
 		return false;
 	
 	obj->Serialize(this);
+}
+
+bool Serializer::fillString(string str){
+	sd_uint32_t size = str.size();
+	
+	if(getLeftSize()<(size+sizeof(size)))
+		return false;
+	
+	fillBytes((sd_uint8_t *)&size, sizeof(size));
+	fillBytes((sd_uint8_t *)str.data(),size);
+	
+	return true;
 }
 
 int Serializer::getUsedSize(){
@@ -95,10 +109,31 @@ int DeSerializer::pullBytes(sd_uint8_t * out, int size){
 }
 
 bool DeSerializer::pullObject(ISerialize * obj){
-	int objsize = obj->getPersistentSizeInByte();
+	sd_uint32_t objsize = obj->getPersistentSizeInByte();
 	
 	if(getLeftSize() < objsize)
 		return false;
 	
 	return obj->DeSerialize(this);
 }
+
+bool DeSerializer::pullString(string * str){
+	
+	sd_uint32_t	size;
+	
+	pullBytes((sd_uint8_t*)&size, sizeof(size));
+	
+	sd_uint8_t * buff = (sd_uint8_t *)malloc(size);
+	
+	if(buff==NULL)
+		return false;
+		
+	pullBytes(buff, size);
+	
+	str->append((char *)buff, size);
+	
+	free(buff);
+	
+	return true;
+}
+

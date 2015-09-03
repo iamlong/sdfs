@@ -19,6 +19,7 @@ class siblockref: public ISerialize{
 		void set_prev_block(char prevblockhash[DIGEST_LEN]);
 		void set_next_block(char nextblockhash[DIGEST_LEN]);
 		void set_seqnum(sd_uint32_t no);
+		sd_uint32_t get_seqnum();
 		void set_blocksize(sd_uint32_t size);
 		void set_usedsize(sd_uint32_t size);
 		void clean_next_block();
@@ -30,7 +31,7 @@ class siblockref: public ISerialize{
 		char* get_hash();
 		
 		//Serialization and DeSerialization
-		int getPersistentSizeInByte();
+		sd_uint32_t getPersistentSizeInByte();
 		bool Serialize(Serializer * inSerializer);
 		bool DeSerialize(DeSerializer * inDeSerializer);
 		

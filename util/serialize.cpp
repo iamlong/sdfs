@@ -1,7 +1,7 @@
 #include "serialize.h"
 
 
-int ISerialize::getISerializeSize(){
+sd_uint32_t ISerialize::getISerializeSize(){
 	return sizeof(m_start_sig) + sizeof(m_end_sig) + sizeof(m_persistent_size);
 };
 
@@ -32,4 +32,10 @@ bool ISerialize::checkBuffer(DeSerializer * inDeSerializer){
 		return false;
 
 	return true;
+}
+
+sd_uint32_t ISerialize::calcStringSize(string eval){
+	sd_uint32_t size = sizeof(sd_uint32_t); //add size of the string before data;
+	size += eval.size();
+	return size;
 }

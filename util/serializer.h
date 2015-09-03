@@ -3,8 +3,11 @@
 
 #include "serialize.h"
 #include "stdtype.h"
+#include <string>
 
 class ISerialize;
+
+using namespace std;
 
 class Serializer
 {
@@ -13,6 +16,7 @@ class Serializer
 		sd_uint8_t * getFilledBuffer();
 		int fillBytes(sd_uint8_t * fillin, int size);
 		bool fillObject(ISerialize * obj);
+		bool fillString(string str);
 		int getUsedSize();
 		int getLeftSize();
 		int getSize();
@@ -31,6 +35,7 @@ class DeSerializer
 		sd_uint8_t * getFilledBuffer();
 		int pullBytes(sd_uint8_t * out, int size);
 		bool pullObject(ISerialize * obj);
+		bool pullString(string * str);
 		int getPulledSize();
 		int getLeftSize();
 		int getTotalSize();

@@ -13,16 +13,16 @@ class processlist:public ISerialize{
 	public:
 		processlist();
 		~processlist();
-		int getPersistentSizeInByte();
+		sd_uint32_t getPersistentSizeInByte();
 		bool Serialize(Serializer * inSerializer);
 		bool DeSerialize(DeSerializer * inDeSerializer);
-		bool addProcess(string host, int pnumber);
-		bool removeProcess(string host, int pnumber);
-		int findProcessIndex(string host, int pnumber);
-		rprocess * getRProcess(int index);
+		bool addProcess(string host, sd_uint32_t pnumber);
+		bool removeProcess(string host, sd_uint32_t pnumber);
+		int findProcessIndex(string host, sd_uint32_t pnumber);
+		rprocess * getRProcess(sd_uint32_t index);
 	private:
 		vector<rprocess *> m_process;
-		string genKey(string host, int pno);
+		string genKey(string host, sd_uint32_t pno);
 		int findProcessbyHash(char hash[DIGEST_LEN] );
 };
 #endif

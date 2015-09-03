@@ -21,7 +21,7 @@ bool rentity::match(const char * comphash)
         
 }
 
-int rentity::refreshDests(const string destsString)
+sd_uint32_t rentity::refreshDests(const string destsString)
 {
     //dest fornamt should be like "ip@port;ip@port"
     //or we can replace ip with hostname like "hostname@port;ip@port"

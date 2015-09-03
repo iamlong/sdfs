@@ -26,13 +26,13 @@ sd_uint32_t sinode::getSiBlockSize(){
 	return m_siblockrefs.size();
 }
 
-siblockref * sinode::getSiBlock(int index){
+siblockref * sinode::getSiBlock(sd_uint32_t index){
 	return m_siblockrefs[index];
 }
 
 bool sinode::addSiBlock(siblockref * b){
 	
-	int size = getSiBlockSize();
+	sd_uint32_t size = getSiBlockSize();
 	
 	for (int i = 0; i<size; i++)
 		if(*b==*getSiBlock(i))
@@ -41,7 +41,7 @@ bool sinode::addSiBlock(siblockref * b){
 	m_siblockrefs.push_back(b);
 }
 
-bool sinode::removeSiBlock(int index){
+bool sinode::removeSiBlock(sd_uint32_t index){
 	
 	if(index > (m_siblockrefs.size()-1) ||index < 0)
 		return false;
@@ -51,13 +51,13 @@ bool sinode::removeSiBlock(int index){
 	m_siblockrefs.erase(m_siblockrefs.begin()+index);
 }
 
-int sinode::getPersistentSizeInByte(){
+sd_uint32_t sinode::getPersistentSizeInByte(){
 	
-	int size =0;
+	sd_uint32_t size =0;
 	size += sizeof(m_base); //siblock membersize
 
-	int blocknum = m_siblockrefs.size();
-	for (int i =0; i<blocknum; i++)
+	sd_uint32_t blocknum = m_siblockrefs.size();
+	for (sd_uint32_t i =0; i<blocknum; i++)
 		size +=m_siblockrefs[i]->getPersistentSizeInByte(); //all siblock membersize
 	
 	size +=getISerializeSize(); //get base size of ISerialize

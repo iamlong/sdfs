@@ -104,6 +104,10 @@ void siblockref::set_seqnum(sd_uint32_t no){
 	m_seqnum = no;
 }
 
+sd_uint32_t siblockref::get_seqnum(){
+	return m_seqnum;
+}
+
 void siblockref::set_blocksize(sd_uint32_t size){
 	m_blocksize = size;
 }
@@ -112,7 +116,7 @@ void siblockref::set_usedsize(sd_uint32_t size){
 	m_usedsize = size;
 }
 
-int siblockref::getPersistentSizeInByte(){
+sd_uint32_t siblockref::getPersistentSizeInByte(){
 	
 	m_persistent_size = sizeof(m_key)+sizeof(m_seqnum)\
 				+sizeof(m_blocksize)+sizeof(m_usedsize)\

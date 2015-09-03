@@ -5,9 +5,10 @@
 
 using namespace std;
 
-class siblocklist:ISerialize{
+class siblocklist:public ISerialize{
 	
 	public:
+		siblocklist();
 		sd_uint32_t appendBlock(siblockref block);
 		bool deletefrom(sd_uint32_t index);
 		sd_uint32_t getSize();
@@ -16,9 +17,9 @@ class siblocklist:ISerialize{
 		vector<string> getRemoveList();
 		
 		//Serialization and Deserialization
-		int getPersistentSizeInByte(){return 0;};
-		bool Serialize(Serializer * inSerializer){return true;};
-		bool DeSerialize(DeSerializer * inDeSerializer){return true;};
+		sd_uint32_t getPersistentSizeInByte();
+		bool Serialize(Serializer * inSerializer);
+		bool DeSerialize(DeSerializer * inDeSerializer);
 	
 	private:
 		vector<siblockref> m_blocklist;

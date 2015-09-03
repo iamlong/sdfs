@@ -66,12 +66,12 @@ class sinode: public ISerialize{
 		
 		//siBlocks
 		sd_uint32_t getSiBlockSize();
-		siblockref * getSiBlock(int index);
+		siblockref * getSiBlock(sd_uint32_t index);
 		bool addSiBlock(siblockref *);
-		bool removeSiBlock(int index);
+		bool removeSiBlock(sd_uint32_t index);
 		
 		//Serialization and DeSerialization
-		int getPersistentSizeInByte();
+		sd_uint32_t getPersistentSizeInByte();
 		bool Serialize(Serializer * inSerializer);
 		bool DeSerialize(DeSerializer * inDeSerializer);
 		

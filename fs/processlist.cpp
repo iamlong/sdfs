@@ -7,7 +7,7 @@ processlist::processlist(){
 	set_sig(PLIST_START_SIG, PLIST_END_SIG);
 }
 
-int processlist::findProcessIndex(string host, int pnumber){
+sd_int32_t processlist::findProcessIndex(string host, sd_uint32_t pnumber){
 
 	string key = genKey( host, pnumber);
 	
@@ -19,18 +19,18 @@ int processlist::findProcessIndex(string host, int pnumber){
 	
 }
 
-int processlist::findProcessbyHash(char hash[DIGEST_LEN] ){
+sd_int32_t processlist::findProcessbyHash(char hash[DIGEST_LEN] ){
 
-	int process_list_size = m_process.size();
+	sd_int32_t process_list_size = m_process.size();
 	
-	for(int i;i<process_list_size; i++)
+	for(sd_int32_t i;i<process_list_size; i++)
 		if(memcmp(hash, m_process[i]->m_hash, DIGEST_LEN)==0)
 			return i;
 			
 	return -1;
 }
 
-string processlist::genKey(string host, int pno){
+string processlist::genKey(string host, sd_uint32_t pno){
 		
 	string key;
 	char temp[256];
@@ -40,7 +40,7 @@ string processlist::genKey(string host, int pno){
 	
 	return key;
 }
-bool processlist::addProcess(string host, int pnumber){
+bool processlist::addProcess(string host, sd_uint32_t pnumber){
 
 	string key = genKey(host, pnumber);
 	
@@ -60,14 +60,14 @@ bool processlist::addProcess(string host, int pnumber){
 	return true;
 }
 
-rprocess * processlist::getRProcess(int index){
+rprocess * processlist::getRProcess(sd_uint32_t index){
 	
-	if(index > m_process.size())
+	if(index > m_process.size()&&index<0)
 		return NULL;
 	
 	return m_process[index];
 }
-bool processlist::removeProcess(string host, int pnumber){
+bool processlist::removeProcess(string host, sd_uint32_t pnumber){
 
 	string key = genKey(host, pnumber);
 	
@@ -75,7 +75,7 @@ bool processlist::removeProcess(string host, int pnumber){
 	
 	utils::hash(key, proc.m_hash);
 	
-	int i = findProcessbyHash(proc.m_hash);
+	sd_int32_t i = findProcessbyHash(proc.m_hash);
 	
 	if(i>=0){
 		delete getRProcess(i);
@@ -86,7 +86,7 @@ bool processlist::removeProcess(string host, int pnumber){
 	return false;
 }
 
-int processlist::getPersistentSizeInByte(){
+sd_uint32_t processlist::getPersistentSizeInByte(){
 	
 	m_persistent_size =  m_process.size() * sizeof(rprocess)+sizeof(sd_uint16_t) + getISerializeSize();
 	return m_persistent_size;
@@ -146,7 +146,7 @@ bool processlist::DeSerialize(DeSerializer * inDeSerializer){
 
 processlist::~processlist(){
 	
-	int processsize = m_process.size();
+	sd_uint32_t processsize = m_process.size();
 	for(int i = 0; i<processsize;i++)
 		delete m_process[i];
 	
