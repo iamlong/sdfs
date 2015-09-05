@@ -1,4 +1,4 @@
-#include "../include/gtest/gtest.h"
+#include "gtest/gtest.h"
 #include "../util/serializer.h"
 #include "../fs/siblock.h"
 #include <string.h>

@@ -11,7 +11,7 @@ CXXINCS  =
 BIN      = libsdfs.a
 CXXFLAGS = $(CXXINCS) 
 CFLAGS   = $(INCS) 
-RM       = rm.exe -f
+RM       = rm -f
 
 
 .PHONY: all all-before all-after clean clean-custom

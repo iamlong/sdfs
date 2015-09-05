@@ -10,6 +10,7 @@ using namespace std;
 class siblockref: public ISerialize{
 	
 	public:
+
 		siblockref();
 		siblockref(int blocksize);
 		siblockref(string path);
@@ -46,6 +47,7 @@ class siblockref: public ISerialize{
 		
 		
 		void init();
+		string gen_key(string key);
 
 };
 

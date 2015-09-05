@@ -1,14 +1,14 @@
 #include "siblock.h"
 #include <time.h>
 #include "../util/utils.h"
+#include <stdlib.h>
 
 siblockref::siblockref(string path){
 	
 	init();
 	set_blocksize(4096);
 	
-	string key = path;
-	key += " timestamp(UTC): "+ time(NULL);
+	string key = gen_key(path);
 	set_key(key);
 }
 
@@ -17,9 +17,7 @@ siblockref::siblockref(string path, int blocksize){
 	init();
 	set_blocksize(blocksize);
 	
-	string key = path;
-	key += " timestamp(UTC): ";
-	key += time(NULL);
+	string key = gen_key(path);
 	set_key(key);
 }
 
@@ -35,6 +33,15 @@ void siblockref::init(){
 	memset(m_prev_block_hash, 0, DIGEST_LEN);
 	m_usedsize = 0;
 }
+
+string siblockref::gen_key(string key){	
+	char sec[50];
+	srand(time(NULL)+rand());
+	sprintf(sec, "rand:%d", rand());
+	printf("%s\n", sec);
+	return key+sec;
+}
+
 
 siblockref::siblockref(int blocksize){
 	set_sig(SIBLKREF_START_SIG, SIBLKREF_END_SIG);

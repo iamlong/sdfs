@@ -26,26 +26,26 @@ class testser : public ISerialize {
 		};
 		
 		bool Serialize(Serializer * inSerializer){
-			inSerializer->fillBytes((uint8_t *)m_start_sig, sizeof(m_start_sig));
-			inSerializer->fillBytes((uint8_t *)&m_persistent_size, sizeof(m_persistent_size));
-			inSerializer->fillBytes((uint8_t *)&a, sizeof(a));
-			inSerializer->fillBytes((uint8_t *)&b, sizeof(b));
-			inSerializer->fillBytes((uint8_t *)c, sizeof(c));
-			inSerializer->fillBytes((uint8_t *)m_end_sig, sizeof(m_end_sig));
+			inSerializer->fillBytes((sd_uint8_t *)m_start_sig, sizeof(m_start_sig));
+			inSerializer->fillBytes((sd_uint8_t *)&m_persistent_size, sizeof(m_persistent_size));
+			inSerializer->fillBytes((sd_uint8_t *)&a, sizeof(a));
+			inSerializer->fillBytes((sd_uint8_t *)&b, sizeof(b));
+			inSerializer->fillBytes((sd_uint8_t *)c, sizeof(c));
+			inSerializer->fillBytes((sd_uint8_t *)m_end_sig, sizeof(m_end_sig));
 			
 		}
 		
 		bool DeSerialize(DeSerializer * inDeSerializer){
-			uint8_t sig[2];
+			sd_uint8_t sig[2];
 			
 			inDeSerializer->pullBytes(sig, 2);
 			if(sig[0]!='T'&&sig[1]!='T')
 					return false;
 			
-			inDeSerializer->pullBytes((uint8_t *)&m_persistent_size, sizeof(m_persistent_size));
-			inDeSerializer->pullBytes((uint8_t *)&a, sizeof(a));
-			inDeSerializer->pullBytes((uint8_t *)&b, sizeof(b));
-			inDeSerializer->pullBytes((uint8_t *)c, sizeof(c));
+			inDeSerializer->pullBytes((sd_uint8_t *)&m_persistent_size, sizeof(m_persistent_size));
+			inDeSerializer->pullBytes((sd_uint8_t *)&a, sizeof(a));
+			inDeSerializer->pullBytes((sd_uint8_t *)&b, sizeof(b));
+			inDeSerializer->pullBytes((sd_uint8_t *)c, sizeof(c));
 			
 			inDeSerializer->pullBytes(sig, 2);
 			if(sig[0]!='T'&&sig[1]!='T')
@@ -72,18 +72,18 @@ TEST (SERIALIZERTEST, FILLBYTES) {
 	
 	ASSERT_EQ(10, a.getSize());
 	
-	ASSERT_TRUE(a.fillBytes((uint8_t *)"abcd", sizeof("abcd")));
+	ASSERT_TRUE(a.fillBytes((sd_uint8_t *)"abcd", sizeof("abcd")));
 	
 	ASSERT_EQ(5, a.getUsedSize());
 	
 	ASSERT_STREQ("abcd", (char *)a.getFilledBuffer());
 	
-	ASSERT_TRUE(a.fillBytes((uint8_t *)"abcd", sizeof("abcd")));
+	ASSERT_TRUE(a.fillBytes((sd_uint8_t *)"abcd", sizeof("abcd")));
 	
 	ASSERT_STREQ("abcd", (char *)a.getFilledBuffer());
 	ASSERT_STREQ("abcd", (char *)(a.getFilledBuffer()+5));
 	
-	ASSERT_FALSE(a.fillBytes((uint8_t *)"abcd", sizeof("abcd")));
+	ASSERT_FALSE(a.fillBytes((sd_uint8_t *)"abcd", sizeof("abcd")));
 
 }
 
