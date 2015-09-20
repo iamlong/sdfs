@@ -1,8 +1,8 @@
-INCDIR = -I../include/cygwin
-LDDIR = -L../ -L../external/cygwin 
-LDMOULE = -lsdfs -lgtest
+INCDIR = -I../include/linux
+LDDIR = -L../ -L../external/linux 
+LDMOULE = -lsdfs -lgtest -lpthread
 
-OBJS = testrtable.o testdest.o testrentity.o testSerializer.o testprocesslist.o testSiBlock.o testBlocklist.o
+OBJS = testrtable.o testdest.o testrentity.o testSerializer.o testprocesslist.o testSiBlock.o testBlocklist.o testTrunk.o
 
 all: $(OBJS)
 

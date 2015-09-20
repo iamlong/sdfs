@@ -3,8 +3,8 @@
 
 CPP      = g++ -g
 CC       = gcc -g
-OBJ      = router/dest.o router/droute.o router/rentity.o router/rtable.o sha1/sha1.o util/utils.o fs/sinode.o fs/siblock.o fs/processlist.o fs/blocklist.o util/serializer.o util/serialize.o
-LINKOBJ  = router/dest.o router/droute.o router/rentity.o router/rtable.o sha1/sha1.o util/utils.o fs/sinode.o fs/siblock.o fs/processlist.o fs/blocklist.o util/serializer.o util/serialize.o
+OBJ      = router/dest.o router/droute.o router/rentity.o router/rtable.o sha1/sha1.o util/utils.o fs/sinode.o fs/siblock.o fs/processlist.o fs/blocklist.o util/serializer.o util/serialize.o storage/trunk.o
+LINKOBJ  = router/dest.o router/droute.o router/rentity.o router/rtable.o sha1/sha1.o util/utils.o fs/sinode.o fs/siblock.o fs/processlist.o fs/blocklist.o util/serializer.o util/serialize.o storage/trunk.o
 LIBS     = 
 INCS     =
 CXXINCS  = 
@@ -62,4 +62,5 @@ util/serializer.o: util/serializer.cpp
 util/serialize.o: util/serialize.cpp
 	$(CPP) -c util/serialize.cpp -o util/serialize.o $(CXXFLAGS)
 
-
+storage/trunk.o: storage/trunk.cpp
+	$(CPP) -c storage/trunk.cpp -o storage/trunk.o $(CXXFLAGS)
