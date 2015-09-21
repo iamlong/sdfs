@@ -15,9 +15,11 @@ string trunk::genPath(string trunkname, string path){
 }
 
 size_t trunk::getFileSize(FILE * fp){
+	size_t pos = ftell(fp);
+	fseek(fp, 1, SEEK_SET);
 	fseek(fp, 0, SEEK_END);
 	size_t ret = ftell(fp);
-	fseek(fp, 0, SEEK_SET);
+	fseek(fp, pos, SEEK_SET);
 	return ret;
 }
 
@@ -36,13 +38,14 @@ bool trunk::write(sd_uint8_t* buff, sd_uint32_t size){
 	if(ret!=size)
 		return false;
 
+	fclose(fp);
 	m_trunk_size = ret;
 	return true;
 }
 
 sd_int32_t trunk::read(sd_uint8_t* buff, sd_uint32_t buff_size){
 	string trunkpath = genPath(m_name, m_path);
-	FILE * fp = fopen(trunkpath.c_str(), "wb");
+	FILE * fp = fopen(trunkpath.c_str(), "r");
 
 	if(fp==NULL)
 	  return false;
