@@ -1,12 +1,6 @@
 #include <stdio.h>
 #include "trunk.h"
 
-trunk::trunk(string trunkname, string path, sd_uint32_t max_size){
-	m_name = trunkname;
-	m_max_trunk_size = max_size;
-	m_path = path;
-	m_buff = NULL;
-}
 
 string trunk::genPath(string trunkname, string path){
 	if(path[path.size()-1]!='/')
@@ -23,32 +17,32 @@ size_t trunk::getFileSize(FILE * fp){
 	return ret;
 }
 
-bool trunk::write(sd_uint8_t* buff, sd_uint32_t size){
+sd_int32_t trunk::write(string trunkname, string path, sd_uint8_t* buff, sd_uint32_t size){
 	
-	if( size>m_max_trunk_size)
-	  return false;
+	if( size>max_trunk_size)
+	  return -1;
 	
-	string trunkpath = genPath(m_name, m_path);
+	string trunkpath = genPath(trunkname, path);
 	FILE * fp = fopen(trunkpath.c_str(), "wb");
 
 	if(fp==NULL)
-	  return false;
+	  return -1;
 
 	size_t ret = fwrite(buff, 1, size, fp);
 	if(ret!=size)
-		return false;
+		return -1;
 
 	fclose(fp);
-	m_trunk_size = ret;
-	return true;
+	
+	return ret;
 }
 
-sd_int32_t trunk::read(sd_uint8_t* buff, sd_uint32_t buff_size){
-	string trunkpath = genPath(m_name, m_path);
+sd_int32_t trunk::read(string trunkname, string path, sd_uint8_t* buff, sd_uint32_t buff_size){
+	string trunkpath = genPath(trunkname, path);
 	FILE * fp = fopen(trunkpath.c_str(), "r");
 
 	if(fp==NULL)
-	  return false;
+	  return -1;
 	size_t fsize = getFileSize(fp);
 	if(fsize>buff_size){
 		fclose(fp);

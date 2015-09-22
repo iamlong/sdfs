@@ -2,31 +2,31 @@
 
 #include <gtest/gtest.h>
 
+sd_uint32_t trunk::max_trunk_size=1024;
 
 TEST (TRUNKTEST, TestWRITE_PASS) {
-	trunk wtrunk("dummy", "./", 20);
 	char a[]="abcdefghjklmn\n";
-	ASSERT_TRUE(wtrunk.write((sd_uint8_t*)a, sizeof(a)));
+	trunk::max_trunk_size=50;
+	ASSERT_TRUE(trunk::write("dummy", "./", (sd_uint8_t*)a, sizeof(a))>0);
 }
 TEST (TRUNKTEST, TestWRITE_FALSE_PATHERR) {
-	trunk wtrunk("dummy", "./cde", 20);
 	char a[]="abcdefghjklmn\n";
-	ASSERT_FALSE(wtrunk.write((sd_uint8_t*)a, sizeof(a)));
+	trunk::max_trunk_size=500;
+	ASSERT_FALSE(trunk::write("dummy", "./abcdewr", (sd_uint8_t*)a, sizeof(a))>0);
 }
 TEST (TRUNKTEST, TestWRITE_FALSE_TOOBIG) {
-	trunk wtrunk("dummy", "./cde", 20);
 	char a[]="abcdefghjklmndjnciwuehhiejnfkewfewfiheufhih\n";
-	ASSERT_FALSE(wtrunk.write((sd_uint8_t*)a, sizeof(a)));
+	trunk::max_trunk_size=10;
+	ASSERT_FALSE(trunk::write("dummy", "./", (sd_uint8_t*)a, sizeof(a))>0);
 }
 
 TEST (TRUNKTEST, TestREAD_PASS) {
-	trunk wtrunk("dummy", "./", 20);
 	char a[]="abcdefghjklmn\n";
-	ASSERT_TRUE(wtrunk.write((sd_uint8_t*)a, sizeof(a)));
+	trunk::max_trunk_size=20;
+	ASSERT_TRUE(trunk::write("dummy", "./", (sd_uint8_t*)a, sizeof(a))>0);
 	char b[20];
 	memset(b,0, 20);
-	trunk rtrunk("abc", "./", 20);
-	ASSERT_TRUE(rtrunk.read((sd_uint8_t*)b, sizeof(b)));
+	ASSERT_TRUE(trunk::read("dummy", "./", (sd_uint8_t*)b, sizeof(b))>0);
 	ASSERT_TRUE(strcmp(a, b)==0);
 }
 int main(int argc, char **argv) {  
