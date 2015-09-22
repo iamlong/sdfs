@@ -2,7 +2,6 @@
 
 #include <gtest/gtest.h>
 
-sd_uint32_t trunk::max_trunk_size=1024;
 
 TEST (TRUNKTEST, TestWRITE_PASS) {
 	char a[]="abcdefghjklmn\n";

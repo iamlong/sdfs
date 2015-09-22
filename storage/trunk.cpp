@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "trunk.h"
 
+sd_uint32_t trunk::max_trunk_size;
 
 string trunk::genPath(string trunkname, string path){
 	if(path[path.size()-1]!='/')
