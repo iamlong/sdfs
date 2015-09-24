@@ -1,8 +1,8 @@
-#include "../storage/commandq.h"
+#include "../storage/storage_commandq.h"
 #include <gtest/gtest.h>
 
 TEST(TESTCOMMANDQ, PUSHQSUCCESS){
-	command_q myq;
+	storage_command_q myq;
 	sd_uint8_t a[20] = "anbcdjkwewcew";
 	myq.pushtoQ("add", NULL, sizeof(a));
 	myq.pushtoQ("delete", NULL, 0);
@@ -10,7 +10,7 @@ TEST(TESTCOMMANDQ, PUSHQSUCCESS){
 
 }
 TEST(TESTCOMMANDQ, PULLQSUCCESS){
-	command_q myq;
+	storage_command_q myq;
 	sd_uint8_t a[20] = "anbcdjkwewcew";
 	myq.pushtoQ("add", NULL, sizeof(a));
 	myq.pushtoQ("delete", NULL, 0);

@@ -1,6 +1,6 @@
-#include "commandq.h"
+#include "storage_commandq.h"
 
-bool command_q::pushtoQ(string command, sd_uint8_t * buff, sd_uint32_t size){
+bool storage_command_q::pushtoQ(string command, sd_uint8_t * buff, sd_uint32_t size){
 	
 	storage_command cmd;
 
@@ -14,7 +14,7 @@ bool command_q::pushtoQ(string command, sd_uint8_t * buff, sd_uint32_t size){
 	return true;
 }
 
-storage_command command_q::pullfromQ(){
+storage_command storage_command_q::pullfromQ(){
 
 	storage_command ret;
 	
@@ -26,7 +26,7 @@ storage_command command_q::pullfromQ(){
 	return ret;
 }
 
-sd_uint32_t command_q::QSize(){
+sd_uint32_t storage_command_q::QSize(){
 	
 	sd_uint32_t ret;
 	m_mtx.lock();

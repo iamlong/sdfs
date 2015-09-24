@@ -13,7 +13,7 @@ struct storage_command{
 	sd_uint32_t data_size;
 };
 
-class command_q{
+class storage_command_q{
 
 	public:
 		bool pushtoQ(string command, sd_uint8_t * buff, sd_uint32_t size);

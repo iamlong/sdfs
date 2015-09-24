@@ -2,7 +2,7 @@ INCDIR = -I../include/cygwin
 LDDIR = -L../ -L../external/cygwin 
 LDMOULE = -lsdfs -lgtest
 
-OBJS = testrtable.o testdest.o testrentity.o testSerializer.o testprocesslist.o testSiBlock.o testBlocklist.o testTrunk.o testcommandQ.o
+OBJS = testrtable.o testdest.o testrentity.o testSerializer.o testprocesslist.o testSiBlock.o testBlocklist.o testTrunk.o teststoragecommandq.o
 
 all: $(OBJS)
 
