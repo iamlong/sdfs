@@ -3,14 +3,14 @@
 
 CPP      = g++ -g
 CC       = gcc -g
-OBJ      = router/dest.o router/droute.o router/rentity.o router/rtable.o sha1/sha1.o util/utils.o fs/sinode.o fs/siblock.o fs/processlist.o fs/blocklist.o util/serializer.o util/serialize.o storage/trunk.o
-LINKOBJ  = router/dest.o router/droute.o router/rentity.o router/rtable.o sha1/sha1.o util/utils.o fs/sinode.o fs/siblock.o fs/processlist.o fs/blocklist.o util/serializer.o util/serialize.o storage/trunk.o
+OBJ      = router/dest.o router/droute.o router/rentity.o router/rtable.o sha1/sha1.o util/utils.o fs/sinode.o fs/siblock.o fs/processlist.o fs/blocklist.o util/serializer.o util/serialize.o storage/trunk.o storage/commandq.o
+LINKOBJ  = router/dest.o router/droute.o router/rentity.o router/rtable.o sha1/sha1.o util/utils.o fs/sinode.o fs/siblock.o fs/processlist.o fs/blocklist.o util/serializer.o util/serialize.o storage/trunk.o storage/commandq.o
 LIBS     = 
 INCS     =
 CXXINCS  = 
 BIN      = libsdfs.a
-CXXFLAGS = $(CXXINCS) 
-CFLAGS   = $(INCS) 
+CXXFLAGS = $(CXXINCS) -std=c++11
+CFLAGS   = $(INCS) -std=c++11
 RM       = rm -f
 
 
@@ -64,3 +64,6 @@ util/serialize.o: util/serialize.cpp
 
 storage/trunk.o: storage/trunk.cpp
 	$(CPP) -c storage/trunk.cpp -o storage/trunk.o $(CXXFLAGS)
+
+storage/commandq.o: storage/commandq.cpp storage/commandq.h
+	$(CPP) -c storage/commandq.cpp -o storage/commandq.o $(CXXFLAGS)

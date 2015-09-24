@@ -1,17 +1,17 @@
 # Project: sdfs
 # Makefile created by Dev-C++ 5.11
 
-CPP      = g++.exe -g
-CC       = gcc.exe -g
-OBJ      = router/dest.o router/droute.o router/rentity.o router/rtable.o sha1/sha1.o util/utils.o fs/sinode.o fs/siblock.o fs/processlist.o fs/blocklist.o util/serializer.o util/serialize.o
-LINKOBJ  = router/dest.o router/droute.o router/rentity.o router/rtable.o sha1/sha1.o util/utils.o fs/sinode.o fs/siblock.o fs/processlist.o fs/blocklist.o util/serializer.o util/serialize.o
+CPP      = g++ -g
+CC       = gcc -g
+OBJ      = router/dest.o router/droute.o router/rentity.o router/rtable.o sha1/sha1.o util/utils.o fs/sinode.o fs/siblock.o fs/processlist.o fs/blocklist.o util/serializer.o util/serialize.o storage/trunk.o storage/commandq.o
+LINKOBJ  = router/dest.o router/droute.o router/rentity.o router/rtable.o sha1/sha1.o util/utils.o fs/sinode.o fs/siblock.o fs/processlist.o fs/blocklist.o util/serializer.o util/serialize.o storage/trunk.o storage/commandq.o
 LIBS     = 
 INCS     =
 CXXINCS  = 
 BIN      = libsdfs.a
-CXXFLAGS = $(CXXINCS) 
-CFLAGS   = $(INCS) 
-RM       = rm.exe -f
+CXXFLAGS = $(CXXINCS) -std=c++11
+CFLAGS   = $(INCS) -std=c++11
+RM       = rm -f
 
 
 .PHONY: all all-before all-after clean clean-custom
@@ -62,4 +62,8 @@ util/serializer.o: util/serializer.cpp
 util/serialize.o: util/serialize.cpp
 	$(CPP) -c util/serialize.cpp -o util/serialize.o $(CXXFLAGS)
 
+storage/trunk.o: storage/trunk.cpp
+	$(CPP) -c storage/trunk.cpp -o storage/trunk.o $(CXXFLAGS)
 
+storage/commandq.o: storage/commandq.cpp storage/commandq.h
+	$(CPP) -c storage/commandq.cpp -o storage/commandq.o $(CXXFLAGS)
