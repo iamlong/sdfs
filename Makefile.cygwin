@@ -3,8 +3,10 @@
 
 CPP      = g++ -g
 CC       = gcc -g
-OBJ      = router/dest.o router/droute.o router/rentity.o router/rtable.o sha1/sha1.o util/utils.o fs/sinode.o fs/siblock.o fs/processlist.o fs/blocklist.o util/serializer.o util/serialize.o storage/trunk.o storage/storage_commandq.o
-LINKOBJ  = router/dest.o router/droute.o router/rentity.o router/rtable.o sha1/sha1.o util/utils.o fs/sinode.o fs/siblock.o fs/processlist.o fs/blocklist.o util/serializer.o util/serialize.o storage/trunk.o storage/storage_commandq.o
+OBJ      = router/dest.o router/droute.o router/rentity.o router/rtable.o sha1/sha1.o util/utils.o fs/sinode.o fs/siblock.o fs/processlist.o fs/blocklist.o \
+			util/serializer.o util/serialize.o storage/trunk.o storage/storcmdq.o
+LINKOBJ  = router/dest.o router/droute.o router/rentity.o router/rtable.o sha1/sha1.o util/utils.o fs/sinode.o fs/siblock.o fs/processlist.o fs/blocklist.o \
+			util/serializer.o util/serialize.o storage/trunk.o storage/storcmdq.o
 LIBS     = 
 INCS     =
 CXXINCS  = 
@@ -65,5 +67,5 @@ util/serialize.o: util/serialize.cpp util/serialize.h
 storage/trunk.o: storage/trunk.cpp storage/trunk.h
 	$(CPP) -c storage/trunk.cpp -o storage/trunk.o $(CXXFLAGS)
 
-storage/commandq.o: storage/storage_commandq.cpp storage/storage_commandq.h
-	$(CPP) -c storage/storage_commandq.cpp -o storage/storage_commandq.o $(CXXFLAGS)
+storage/commandq.o: storage/storcmdq.cpp storage/storcmdq.h
+	$(CPP) -c storage/storcmdq.cpp -o storage/storcmdq.o $(CXXFLAGS)
