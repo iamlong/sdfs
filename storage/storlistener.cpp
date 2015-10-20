@@ -1,6 +1,12 @@
 #include "storlistener.h"
 
-void storage_listener::listener(storage_command_q * cmdq, int port){
+storage_listener::storage_listener(command_pusher pusher){
+
+	m_pusher = pusher;
+	return;
+}
+
+void storage_listener::listener(command_pusher pusher, int port){
 	
 
 }

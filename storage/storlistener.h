@@ -5,10 +5,12 @@
 
 class storage_listener {
 	public:
+		storage_listenser(command_pusher pusher);
 		bool start();
 		bool stop();
 
 	private:
-		void listener(storage_command_q * cmdq, int port);
+		command_pusher m_pusher;
+		void listener(command_pusher pusher, int port);
 };
 #endif

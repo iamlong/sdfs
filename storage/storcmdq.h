@@ -13,10 +13,12 @@ struct storage_command{
 	sd_uint32_t data_size;
 };
 
+typedef bool (command_pusher)(string command, sd_uint8_t * cmd_buff, sd_uint32_t buff_size);
+
 class storage_command_q{
 
 	public:
-		bool pushtoQ(string command, sd_uint8_t * buff, sd_uint32_t size);
+		bool pushtoQ(string command, sd_uint8_t * cmd_buff, sd_uint32_t size);
 		storage_command pullfromQ();
 		sd_uint32_t QSize();
 

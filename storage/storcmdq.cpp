@@ -1,12 +1,12 @@
 #include "storcmdq.h"
 
-bool storage_command_q::pushtoQ(string command, sd_uint8_t * buff, sd_uint32_t size){
+bool storage_command_q::pushtoQ(string command, sd_uint8_t * cmd_buff, sd_uint32_t buff_size){
 	
 	storage_command cmd;
 
 	cmd.command = command;
-	cmd.data_buff = buff;
-	cmd.data_size = size;
+	cmd.data_buff = cmd_buff;
+	cmd.data_size = buff_size;
 	
 	m_mtx.lock();
 	m_commandQ.push(cmd);
