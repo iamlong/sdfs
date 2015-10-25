@@ -4,10 +4,14 @@
 #include <ifaddrs.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <vector>
+#include <string>
+
+using namespace std;
 
 class networkhelper {
 	public:
-		static array<string> getLocalips();
-}
+		static void getLocalips(vector<string> * ipvector);
+};
 
 #endif

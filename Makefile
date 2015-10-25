@@ -4,9 +4,9 @@
 CPP      = g++ -g
 CC       = gcc -g
 OBJ      = router/dest.o router/droute.o router/rentity.o router/rtable.o sha1/sha1.o util/utils.o fs/sinode.o fs/siblock.o fs/processlist.o fs/blocklist.o \
-			util/serializer.o util/serialize.o storage/trunk.o storage/storcmdq.o
+			util/serializer.o util/serialize.o util/network.o storage/trunk.o storage/storcmdq.o
 LINKOBJ  = router/dest.o router/droute.o router/rentity.o router/rtable.o sha1/sha1.o util/utils.o fs/sinode.o fs/siblock.o fs/processlist.o fs/blocklist.o \
-			util/serializer.o util/serialize.o storage/trunk.o storage/storcmdq.o
+			util/serializer.o util/serialize.o util/network.o storage/trunk.o storage/storcmdq.o
 LIBS     = 
 INCS     =
 CXXINCS  = 
@@ -63,6 +63,9 @@ util/serializer.o: util/serializer.cpp util/serializer.h
 
 util/serialize.o: util/serialize.cpp util/serialize.h
 	$(CPP) -c util/serialize.cpp -o util/serialize.o $(CXXFLAGS)
+
+util/network.o: util/network.cpp util/network.h
+	$(CPP) -c util/network.cpp -o util/network.o $(CXXFLAGS)
 
 storage/trunk.o: storage/trunk.cpp storage/trunk.h
 	$(CPP) -c storage/trunk.cpp -o storage/trunk.o $(CXXFLAGS)
