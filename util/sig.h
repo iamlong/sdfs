@@ -10,4 +10,7 @@
 #define SIBLKLIST_START_SIG "BL"
 #define SIBLKLIST_END_SIG "LB"
 
+
+#define STORCMD_START_SIG "SC"
+#define STORCMD_END_SIG "CS"
 #endif

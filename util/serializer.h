@@ -9,6 +9,7 @@ class ISerialize;
 
 using namespace std;
 
+
 class Serializer
 {
 	public:

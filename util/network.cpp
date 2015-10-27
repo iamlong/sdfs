@@ -28,3 +28,24 @@ void networkhelper::getLocalips(vector<string> * ipvector ){
     
     freeifaddrs(ifAddrStruct);
 }
+
+int networkhelper::CreatelistenOnUDPv4(string ip, int port){
+
+	int sockfd;
+    struct sockaddr_in servaddr, cliaddr;
+    
+	sockfd = socket(AF_INET, SOCK_DGRAM, 0); /* create a socket */
+    /* init servaddr */
+    bzero(&servaddr, sizeof(servaddr));
+    servaddr.sin_family = AF_INET;
+	if(ip.size()<=0) //if ip is not set;
+		servaddr.sin_addr.s_addr = htonl(INADDR_ANY); //#define INADDR_ANY   ((unsigned long int) 0x00000000)
+	else servaddr.sin_addr.s_addr = inet_addr(ip.c_str());
+	
+	servaddr.sin_port = htons(port);
+
+	if(bind(sockfd, (struct sockaddr *)&servaddr, sizeof(servaddr)) == -1)
+	  return -1;
+	else
+	  return sockfd;
+}

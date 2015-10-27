@@ -156,7 +156,7 @@ bool siblockref::Serialize(Serializer * inSerializer){
 	
 	inSerializer->fillBytes((sd_uint8_t *)&m_prev_block_hash, sizeof(m_prev_block_hash));
 	
-	inSerializer->fillBytes((sd_uint8_t *)&m_end_sig, sizeof(m_end_sig));
+	inSerializer->fillBytes((sd_uint8_t *)m_end_sig, sizeof(m_end_sig));
 	
 	return true;
 }
