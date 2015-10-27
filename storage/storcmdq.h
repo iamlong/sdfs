@@ -4,27 +4,22 @@
 #include <queue>
 #include <mutex>
 #include "../util/stdtype.h"
+#include "storcmd.h"
 
 using namespace std;
 
-struct storage_command{
-	string command;
-	sd_uint8_t * data_buff;
-	sd_uint32_t data_size;
-};
-
-typedef bool (* command_pusher)(string command, sd_uint8_t * cmd_buff, sd_uint32_t buff_size);
+typedef bool (* command_pusher)(storage_command * inCmd);
 
 class storage_command_q{
 
 	public:
-		bool pushtoQ(string command, sd_uint8_t * cmd_buff, sd_uint32_t size);
-		storage_command pullfromQ();
+		bool pushtoQ( storage_command* inCmd);
+		storage_command* pullfromQ();
 		sd_uint32_t QSize();
 
 	private:
 		mutex m_mtx;
-		queue<storage_command> m_commandQ;
+		queue<storage_command*> m_commandQ;
 };
 
 
