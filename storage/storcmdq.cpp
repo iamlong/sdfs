@@ -31,6 +31,18 @@ sd_uint32_t storage_command_q::QSize(){
 	
 }
 
+storage_command_q::~storage_command_q(){
+    storage_command * tq;
+    while(m_commandQ.size()>0){
+        tq = pullfromQ();
+        delete tq;
+    }
+}
+
 bool cmd_push(storage_command_q* q, storage_command* inCmd){
     q->pushtoQ(inCmd);
+}
+
+storage_command* cmd_pull(storage_command_q* q){
+    return q->pullfromQ();
 }

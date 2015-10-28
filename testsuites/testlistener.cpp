@@ -17,7 +17,7 @@ using namespace std;
 TEST (TESTLISTENER,STARTSERVICE) {
 
     storage_command_q cmdq;
-    string a = "127.0.03.1";
+    string a = "127.0.0.1";
     storage_listener listener(cmd_push, &cmdq, a,1234);
     if(listener.start())
         listener.getThread()->join();

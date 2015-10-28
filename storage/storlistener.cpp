@@ -17,7 +17,8 @@ void storage_listener::listener(command_pusher pusher, storage_command_q * q, st
 	sd_uint8_t * buff = (sd_uint8_t *)malloc(buffsize);
 	bzero(buff, buffsize);
 	sd_uint32_t recved;
-
+    
+    cout<<"start listening\n, port creaded: fd="<<udpsock<<"\n";
 	struct sockaddr reqaddr;
 	int addr_len=sizeof(reqaddr);
 
@@ -30,10 +31,13 @@ void storage_listener::listener(command_pusher pusher, storage_command_q * q, st
 		//receive command from udp port
 		//add command to command_pusher
 		recved = recvfrom(udpsock, buff, buffsize, 0, &reqaddr, (socklen_t *)&addr_len);
+        cout<<"received:"<<recved<<"\n";
 		DeSerializer cmdSerializer(buff, recved);
 		if(!cmd->DeSerialize(&cmdSerializer))
 		  continue;
-		pusher(q, cmd);
+		cout<<cmd->getCommand()<<"\n";
+        pusher(q, cmd);
+		cout<<"QueueSize:"<<q->QSize()<<"\n";
 		cmd = new storage_command(1024*4);
 
 	}

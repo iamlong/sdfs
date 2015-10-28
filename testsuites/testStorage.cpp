@@ -13,6 +13,10 @@ using namespace std;
 #include "../storage/storcmd.h"
 #include "../util/network.h"
 #include <netinet/in.h>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <netdb.h>
+
 TEST(TESTLISTENER, SENDCOMMAND){
     
     storage_command creatcmd(1024*4); //set max buff size to 4k
@@ -27,8 +31,10 @@ TEST(TESTLISTENER, SENDCOMMAND){
     struct hostent * clihost=gethostbyname("127.0.0.1");
     bzero(&cliaddr, sizeof(cliaddr));
     cliaddr.sin_family=AF_INET;
-    cliaddr.sin_addr.saddr=*((struct in_addr*)clihost->h_addr);
-    sendto(sockfd, inSerializer.getFilledBuffer(), inSerializer.getUsedSize(),0, sizeof(cliaddr) );
+    cliaddr.sin_addr=*((struct in_addr*)clihost->h_addr);
+    cliaddr.sin_port=htons(1234);
+    int n = sendto(sockfd, inSerializer.getFilledBuffer(), inSerializer.getUsedSize(),0, (struct sockaddr*)&cliaddr, sizeof(cliaddr) );
+    cout<<"sent:"<<n<<"\n";
 
 }
 

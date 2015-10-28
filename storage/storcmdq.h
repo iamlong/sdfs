@@ -14,6 +14,7 @@ class storage_command_q{
 		bool pushtoQ( storage_command* inCmd);
 		storage_command* pullfromQ();
 		sd_uint32_t QSize();
+        ~storage_command_q();
 
 	protected:
 		mutex m_mtx;
@@ -21,7 +22,10 @@ class storage_command_q{
 };
 
 typedef bool (* command_pusher)(storage_command_q* q, storage_command * inCmd);
+typedef storage_command * (*command_puller)(storage_command_q* q);
 
 bool cmd_push(storage_command_q* q, storage_command* inCmd);
+
+storage_command * cmd_pull(storage_command_q* q);
 
 #endif

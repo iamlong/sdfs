@@ -15,10 +15,13 @@ class storage_command: public ISerialize{
 
 		void init(); //initialize Storage_Command
 		storage_command(sd_uint32_t maxsize);
+        ~storage_command();
 
 		bool CreateCommand(string filename, sd_uint8_t * buff, sd_uint32_t buff_size);
 		bool ReadCommand(string filename); 
 		bool DeleteCommand(string filename);
+		string getCommand();
+        bool setBuff(sd_uint32_t* buff, sd_uint32_t size);
 
 
 	private:
@@ -27,8 +30,9 @@ class storage_command: public ISerialize{
 		string m_filename;
 		sd_uint32_t m_buff_size;
 		sd_uint8_t * m_buff;
+        auto_ptr m_buff_guard;
 		bool setCommand(string command, string filename, sd_uint8_t * buff, sd_uint32_t buff_size);
-
+        bool createbuff(sd_uint32_t size);
 };
 
 #endif
