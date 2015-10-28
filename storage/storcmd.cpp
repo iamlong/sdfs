@@ -32,10 +32,12 @@ bool storage_command::Serialize(Serializer * inSerializer){
 	inSerializer->fillString(m_command);
 
 	inSerializer->fillString(m_filename);
-	if(m_buff_size >0){
-		inSerializer->fillBytes((sd_uint8_t*)&m_buff_size, sizeof(m_buff_size));
-		inSerializer->fillBytes((sd_uint8_t*)m_buff, m_buff_size);
-	}
+	
+	inSerializer->fillBytes((sd_uint8_t*)&m_buff_size, sizeof(m_buff_size));
+	
+    if(m_buff_size>0)
+        inSerializer->fillBytes((sd_uint8_t*)m_buff, m_buff_size);
+	
 
 	inSerializer->fillBytes((sd_uint8_t*)m_end_sig, sizeof(m_end_sig));
 

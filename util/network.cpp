@@ -29,7 +29,7 @@ void networkhelper::getLocalips(vector<string> * ipvector ){
     freeifaddrs(ifAddrStruct);
 }
 
-int networkhelper::CreatelistenOnUDPv4(string ip, int port){
+int networkhelper::CreateUDPv4(string ip, int port){
 
 	int sockfd;
     struct sockaddr_in servaddr, cliaddr;

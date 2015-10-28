@@ -14,7 +14,7 @@ using namespace std;
 class networkhelper {
 	public:
 		static void getLocalips(vector<string> * ipvector);
-		static int CreatelistenOnUDPv4(string ip, int port);
+		static int CreateUDPv4(string ip, int port);
 };
 
 #endif

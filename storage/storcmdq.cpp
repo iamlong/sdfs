@@ -31,3 +31,6 @@ sd_uint32_t storage_command_q::QSize(){
 	
 }
 
+bool cmd_push(storage_command_q* q, storage_command* inCmd){
+    q->pushtoQ(inCmd);
+}

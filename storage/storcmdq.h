@@ -8,8 +8,6 @@
 
 using namespace std;
 
-typedef bool (* command_pusher)(storage_command * inCmd);
-
 class storage_command_q{
 
 	public:
@@ -17,10 +15,13 @@ class storage_command_q{
 		storage_command* pullfromQ();
 		sd_uint32_t QSize();
 
-	private:
+	protected:
 		mutex m_mtx;
 		queue<storage_command*> m_commandQ;
 };
 
+typedef bool (* command_pusher)(storage_command_q* q, storage_command * inCmd);
+
+bool cmd_push(storage_command_q* q, storage_command* inCmd);
 
 #endif
