@@ -7,23 +7,18 @@ void storage_command::init(){
 
 storage_command::storage_command(sd_uint32_t maxsize){
 	m_max_buff_size = maxsize;
-    m_buff = NULL;
     m_buff_size = 0;
 	init();
 }
 
-storage_command::~storage_command(){
-    //if(m_buff!=NULL)
-    //    free(m_buff);
-}
-
-bool storage_command::setBuff(sd_uint8_t* buff, sd_uint32_t size){
+/*bool storage_command::setBuff(sd_uint8_t* buff, sd_uint32_t size){
     if(size>m_max_buff_size)
         return false;
     m_buff=buff;
     m_buff_size = size;
+    //m_buff_guard = NULL;
     return true;
-}
+}*/
 
 sd_uint32_t storage_command::getPersistentSizeInByte(){
 	m_persistent_size = sizeof(m_max_buff_size)\
@@ -53,7 +48,7 @@ bool storage_command::Serialize(Serializer * inSerializer){
 	inSerializer->fillBytes((sd_uint8_t*)&m_buff_size, sizeof(m_buff_size));
 	
     if(m_buff_size>0)
-        inSerializer->fillBytes((sd_uint8_t*)m_buff, m_buff_size);
+        inSerializer->fillBytes(m_buff.get(), m_buff_size);
 	
 
 	inSerializer->fillBytes((sd_uint8_t*)m_end_sig, sizeof(m_end_sig));
@@ -77,13 +72,12 @@ bool storage_command::DeSerialize(DeSerializer * inDeSerializer){
 	if(m_buff_size>m_max_buff_size)
 		return false;
 
-	if(m_buff!=NULL)
-	  free(m_buff);
+	//if(m_buff!=NULL)
+	//  free(m_buff);
 
 	if(m_buff_size>0){
-		m_buff = (sd_uint8_t *)malloc(m_buff_size);
-
-		if(inDeSerializer->pullBytes(m_buff, m_buff_size)!=m_buff_size)
+		m_buff.reset(new sd_uint8_t[m_buff_size]);
+		if(inDeSerializer->pullBytes(m_buff.get(), m_buff_size)!=m_buff_size)
 			return false;
 	}
 
@@ -101,8 +95,10 @@ bool storage_command::setCommand(string command, string filename, sd_uint8_t * b
 
 	m_command = command;
 	m_filename = filename;
-	m_buff = buff;
 	m_buff_size = buff_size;
+	m_buff.reset(new sd_uint8_t[m_buff_size]);
+	memcpy(m_buff.get(), buff, m_buff_size);
+
 	return true;
 }
 

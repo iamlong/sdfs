@@ -8,7 +8,7 @@ all: $(OBJS)
 
 $(OBJS): %.o: %.cpp
 	g++ -g -std=gnu++11 $< -o $@ $(INCDIR) $(LDDIR) $(LDMOULE) 
-	./$@
+	#./$@
 
 clean : 
 	rm -f *.o
