@@ -11,9 +11,6 @@
 
 using namespace std;
 
-mutex mtx;
-condition_variable cv;
-
 class storage_listener {
 	public:
 		storage_listener(command_pusher pusher, command_puller puller, storage_command_q * q, string ip, int port);

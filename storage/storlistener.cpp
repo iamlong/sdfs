@@ -1,5 +1,9 @@
 #include "./storlistener.h"
 
+
+mutex lis_mtx;
+condition_variable lis_cv;
+
 storage_listener::storage_listener(command_pusher pusher, command_puller puller, storage_command_q * q, std::string ip, int port){
 
 	m_pusher = pusher;
@@ -11,19 +15,17 @@ storage_listener::storage_listener(command_pusher pusher, command_puller puller,
 }
 
 void storage_listener::consumer(command_puller puller, storage_command_q * q){
-	std::unique_lock<std::mutex> lck(mtx);
 	for(;;){
-		cv.wait(lck);
+		std::unique_lock<std::mutex> lck(lis_mtx);
+		lis_cv.wait(lck);
 		while(q->QSize()>0) {
 			storage_command * ret = puller(q);
 			delete ret;
 		}
-		//sleep(1000);
 	}
 }
 void storage_listener::listener(command_pusher pusher, storage_command_q * q, std::string ip, int port){
-	std::unique_lock<std::mutex> lck(mtx);
-	
+		
 	int udpsock = networkhelper::CreateUDPv4(ip, port);
 	
 	sd_uint32_t buffsize = 1024*5;
@@ -44,13 +46,13 @@ void storage_listener::listener(command_pusher pusher, storage_command_q * q, st
 		//receive command from udp port
 		//add command to command_pusher
 		recved = recvfrom(udpsock, buff, buffsize, 0, &reqaddr, (socklen_t *)&addr_len);
-        cout<<"received:"<<recved<<"\n";
 		DeSerializer cmdSerializer(buff, recved);
 		if(!cmd->DeSerialize(&cmdSerializer))
 		  continue;
 		cout<<cmd->getCommand()<<"\n";
         pusher(q, cmd);
-		cv.notify_one();
+		std::unique_lock<std::mutex> lck(lis_mtx);
+		lis_cv.notify_one();
 		cout<<"QueueSize:"<<q->QSize()<<"\n";
 		cmd = new storage_command(1024*4);
 
