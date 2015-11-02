@@ -20,6 +20,7 @@ void storage_listener::consumer(command_puller puller, storage_command_q * q){
 		lis_cv.wait(lck);
 		while(q->QSize()>0) {
 			storage_command * ret = puller(q);
+            ret->processCommand();
 			delete ret;
 		}
 	}

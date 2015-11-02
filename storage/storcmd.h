@@ -4,6 +4,7 @@
 #include "../util/serialize.h"
 #include "stdlib.h"
 #include "../util/sig.h"
+#include <fstream>
 
 class storage_command: public ISerialize{
 	
@@ -22,6 +23,7 @@ class storage_command: public ISerialize{
 		bool DeleteCommand(string filename);
 		string getCommand();
         bool setBuff(sd_uint8_t* buff, sd_uint32_t size);
+        bool processCommand();
 
 
 	private:

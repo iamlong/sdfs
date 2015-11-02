@@ -120,3 +120,15 @@ bool storage_command::DeleteCommand(string filename){
 string storage_command::getCommand(){
 	return m_command;
 }
+
+bool storage_command::processCommand(){
+    
+    if(m_command=="Create"){
+        fstream fs;
+        fs.open(m_filename, fstream::out|fstream::trunc|fstream::binary);
+        fs.write((char*)m_buff.get(), m_buff_size);
+        fs.close();
+        return true;
+    }
+    return false;
+}

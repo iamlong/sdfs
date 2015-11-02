@@ -21,7 +21,8 @@ TEST(TESTLISTENER, SENDCOMMAND){
     
     storage_command creatcmd(1024*4); //set max buff size to 4k
     Serializer inSerializer(1024*5); //create 5K buff for serialization
-    creatcmd.CreateCommand("firsttrunk", NULL, 0);
+    sd_uint8_t bff[20]="abcdefghiiklmnopq1";
+    creatcmd.CreateCommand("firsttrunk", bff, 20);
     creatcmd.Serialize(&inSerializer);
 
     //now start to send command to endpoint;
