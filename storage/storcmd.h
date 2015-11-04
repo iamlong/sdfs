@@ -34,6 +34,9 @@ class storage_command: public ISerialize{
         shared_ptr<sd_uint8_t> m_buff;
 		bool setCommand(string command, string filename, sd_uint8_t * buff, sd_uint32_t buff_size);
         bool createbuff(sd_uint32_t size);
+        bool processCreate();
+        bool processDelete();
+        bool processRead();
 };
 
 #endif

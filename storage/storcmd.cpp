@@ -72,9 +72,6 @@ bool storage_command::DeSerialize(DeSerializer * inDeSerializer){
 	if(m_buff_size>m_max_buff_size)
 		return false;
 
-	//if(m_buff!=NULL)
-	//  free(m_buff);
-
 	if(m_buff_size>0){
 		m_buff.reset(new sd_uint8_t[m_buff_size]);
 		if(inDeSerializer->pullBytes(m_buff.get(), m_buff_size)!=m_buff_size)
@@ -123,12 +120,42 @@ string storage_command::getCommand(){
 
 bool storage_command::processCommand(){
     
-    if(m_command=="Create"){
-        fstream fs;
-        fs.open(m_filename, fstream::out|fstream::trunc|fstream::binary);
+    if(m_command=="Create")
+        return processCreate();
+    if(m_command=="Delete")
+        return processDelete();
+}
+
+bool storage_command::processCreate(){
+    
+    bool ret = false;
+
+    fstream fs;
+    fs.open(m_filename, fstream::out|fstream::trunc|fstream::binary);
+    if(!fs.fail()){
         fs.write((char*)m_buff.get(), m_buff_size);
-        fs.close();
-        return true;
-    }
-    return false;
+        if(!fs.fail()) ret=true;
+    fs.close();
+    return ret;
+   
+}
+
+bool storage_command::processDelete(){
+    if(remove(m_filename.c_str())!=0)
+        return false;
+    return true;
+}
+
+bool storage_command::processRead(){
+     
+    bool ret = false;
+    
+    fstream fs;
+    fs.open(m_filename, fstream::in|fstream::binary);
+    if(!fs.fail()){
+        fs.read(char*)m_buff.get(), m_buff_size);
+        if(!fs.fail()) ret=true;
+    fs.close();
+    return ret;
+      
 }
